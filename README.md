@@ -1,4 +1,5 @@
-# lammps-wrapper-interface
+## Overview
+
 To use Lammps Python Wrapper in more Python-Like way
 
 ## Dependencies
@@ -6,5 +7,3 @@ To use Lammps Python Wrapper in more Python-Like way
 ## Install
 
 ## Examples
-
-
