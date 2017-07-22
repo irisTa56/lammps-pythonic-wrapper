@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>class_diagram</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/takayuki/.atom/packages/markdown-preview-enhanced/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+
+      
+      
+
+      <style> 
+      /**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #ABB2BF;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  background: #383e49;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  text-shadow: none;
+  background: #9aa2b1;
+}
+
+@media print {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #282c34;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #5C6370;
+}
+
+.token.punctuation {
+  color: #abb2bf;
+}
+
+.token.selector,
+.token.tag {
+  color: #e06c75;
+}
+
+.token.property,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.attr-name,
+.token.deleted {
+  color: #d19a66;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.builtin,
+.token.inserted {
+  color: #98c379;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #56b6c2;
+}
+
+.token.atrule,
+.token.keyword {
+  color: #c678dd;
+}
+
+.token.function {
+  color: #61afef;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #c678dd;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre.line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+	position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	font-size: 100%;
+	left: -3.8em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	border-right: 0;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+.line-numbers-rows > span {
+	pointer-events: none;
+	display: block;
+	counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+	content: counter(linenumber);
+	color: #5C6370;
+	display: block;
+	padding-right: 0.8em;
+	text-align: right;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;padding:2em;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#0050a3;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:16px;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:normal}}@media screen and (min-width:914px){html body:not([data-presentation-mode]){width:980px;margin:10px auto}}@media screen and (max-width:400px){html body:not([data-presentation-mode]){font-size:14px;margin:0 auto;padding:15px}}html body .pagebreak,html body .newpage{page-break-before:always}html body pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}html body pre.line-numbers>code{position:relative}html body pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}html body pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}html body pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}html body .mathjax-exps .MathJax_Display{text-align:center !important}html body:not([for="preview"]) .code-chunk .btn-group{display:none}html body:not([for="preview"]) .code-chunk .status{display:none} 
+       
+      </style>
+    </head>
+    <body class="mume   ">
+    <p><?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="654px" preserveAspectRatio="none" style="width:629px;height:654px;" version="1.1" viewBox="0 0 629 654" width="629px" zoomAndPan="magnify"><defs><filter height="300%" id="fg657275mze3t" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"></feGaussianBlur><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"></feColorMatrix><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"></feOffset><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"></feBlend></filter></defs><g><!--class Manager--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="164.5957" id="Manager" style="stroke: #A80036; stroke-width: 1.5;" width="107" x="258" y="8"></rect><ellipse cx="284.25" cy="24" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M287.2231,29.6431 Q286.6421,29.9419 286.0029,30.0913 Q285.3638,30.2407 284.6582,30.2407 Q282.1514,30.2407 280.8315,28.5889 Q279.5117,26.937 279.5117,23.8159 Q279.5117,20.6865 280.8315,19.0347 Q282.1514,17.3828 284.6582,17.3828 Q285.3638,17.3828 286.0112,17.5322 Q286.6587,17.6816 287.2231,17.9805 L287.2231,20.7031 Q286.5923,20.1221 285.9988,19.8523 Q285.4053,19.5825 284.7744,19.5825 Q283.4297,19.5825 282.7449,20.6492 Q282.0601,21.7158 282.0601,23.8159 Q282.0601,25.9077 282.7449,26.9744 Q283.4297,28.041 284.7744,28.041 Q285.4053,28.041 285.9988,27.7712 Q286.5923,27.5015 287.2231,26.9204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50" x="300.75" y="28.5352">Manager</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="259" x2="364" y1="40" y2="40"></line><ellipse cx="269" cy="51.9775" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="43" x="278" y="54.6348">Settings</text><ellipse cx="269" cy="64.9326" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="278" y="67.5898">Universe</text><ellipse cx="269" cy="77.8877" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="40" x="278" y="80.5449">Groups</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="259" x2="364" y1="86.8652" y2="86.8652"></line><ellipse cx="269" cy="98.8428" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="65" x="278" y="101.5">addSetting()</text><ellipse cx="269" cy="111.7979" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81" x="278" y="114.4551">createGroups()</text><ellipse cx="269" cy="124.7529" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="56" x="278" y="127.4102">getValStr()</text><ellipse cx="269" cy="137.708" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="64" x="278" y="140.3652">executeAll()</text><ellipse cx="269" cy="150.6631" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="58" x="278" y="153.3203">outputAll()</text><ellipse cx="269" cy="163.6182" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="50" x="278" y="166.2754">showAll()</text><!--class Setting--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="112.7754" id="Setting" style="stroke: #A80036; stroke-width: 1.5;" width="76" x="273.5" y="234"></rect><ellipse cx="291.2" cy="250" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M294.1731,255.6431 Q293.5921,255.9419 292.9529,256.0913 Q292.3138,256.2407 291.6082,256.2407 Q289.1014,256.2407 287.7815,254.5889 Q286.4617,252.937 286.4617,249.8159 Q286.4617,246.6865 287.7815,245.0347 Q289.1014,243.3828 291.6082,243.3828 Q292.3138,243.3828 292.9612,243.5322 Q293.6087,243.6816 294.1731,243.9805 L294.1731,246.7031 Q293.5423,246.1221 292.9488,245.8523 Q292.3553,245.5825 291.7244,245.5825 Q290.3797,245.5825 289.6949,246.6492 Q289.0101,247.7158 289.0101,249.8159 Q289.0101,251.9077 289.6949,252.9744 Q290.3797,254.041 291.7244,254.041 Q292.3553,254.041 292.9488,253.7712 Q293.5423,253.5015 294.1731,252.9204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="38" x="305.8" y="254.5352">Setting</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="274.5" x2="348.5" y1="266" y2="266"></line><ellipse cx="284.5" cy="277.9775" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44" x="293.5" y="280.6348">__dict__</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="274.5" x2="348.5" y1="286.9551" y2="286.9551"></line><ellipse cx="284.5" cy="298.9326" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="37" x="293.5" y="301.5898">apply()</text><ellipse cx="284.5" cy="311.8877" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="50" x="293.5" y="314.5449">execute()</text><ellipse cx="284.5" cy="324.8428" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44" x="293.5" y="327.5">output()</text><ellipse cx="284.5" cy="337.7979" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="36" x="293.5" y="340.4551">show()</text><!--class Universe--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="99.8203" id="Universe" style="stroke: #A80036; stroke-width: 1.5;" width="81" x="154" y="240.5"></rect><ellipse cx="169" cy="256.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M171.9731,262.1431 Q171.3921,262.4419 170.7529,262.5913 Q170.1138,262.7407 169.4082,262.7407 Q166.9014,262.7407 165.5815,261.0889 Q164.2617,259.437 164.2617,256.3159 Q164.2617,253.1865 165.5815,251.5347 Q166.9014,249.8828 169.4082,249.8828 Q170.1138,249.8828 170.7612,250.0322 Q171.4087,250.1816 171.9731,250.4805 L171.9731,253.2031 Q171.3423,252.6221 170.7488,252.3523 Q170.1553,252.0825 169.5244,252.0825 Q168.1797,252.0825 167.4949,253.1492 Q166.8101,254.2158 166.8101,256.3159 Q166.8101,258.4077 167.4949,259.4744 Q168.1797,260.541 169.5244,260.541 Q170.1553,260.541 170.7488,260.2712 Q171.3423,260.0015 171.9731,259.4204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="49" x="183" y="261.0352">Universe</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="155" x2="234" y1="272.5" y2="272.5"></line><line style="stroke: #A80036; stroke-width: 1.5;" x1="155" x2="234" y1="280.5" y2="280.5"></line><ellipse cx="165" cy="292.4775" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="53" x="174" y="295.1348">addCmd()</text><ellipse cx="165" cy="305.4326" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="174" y="308.0898">addMol()</text><ellipse cx="165" cy="318.3877" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="48" x="174" y="321.0449">addReg()</text><ellipse cx="165" cy="331.3428" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="46" x="174" y="334">addVar()</text><!--class Group--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="112.7754" id="Group" style="stroke: #A80036; stroke-width: 1.5;" width="86" x="387.5" y="234"></rect><ellipse cx="410.6" cy="250" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M413.5731,255.6431 Q412.9921,255.9419 412.3529,256.0913 Q411.7138,256.2407 411.0082,256.2407 Q408.5014,256.2407 407.1815,254.5889 Q405.8617,252.937 405.8617,249.8159 Q405.8617,246.6865 407.1815,245.0347 Q408.5014,243.3828 411.0082,243.3828 Q411.7138,243.3828 412.3612,243.5322 Q413.0087,243.6816 413.5731,243.9805 L413.5731,246.7031 Q412.9423,246.1221 412.3488,245.8523 Q411.7553,245.5825 411.1244,245.5825 Q409.7797,245.5825 409.0949,246.6492 Q408.4101,247.7158 408.4101,249.8159 Q408.4101,251.9077 409.0949,252.9744 Q409.7797,254.041 411.1244,254.041 Q411.7553,254.041 412.3488,253.7712 Q412.9423,253.5015 413.5731,252.9204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="36" x="426.4" y="254.5352">Group</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="388.5" x2="472.5" y1="266" y2="266"></line><ellipse cx="398.5" cy="277.9775" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="33" x="407.5" y="280.6348">group</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="388.5" x2="472.5" y1="286.9551" y2="286.9551"></line><ellipse cx="398.5" cy="298.9326" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="53" x="407.5" y="301.5898">addCmd()</text><ellipse cx="398.5" cy="311.8877" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="57" x="407.5" y="314.5449">addCmpt()</text><ellipse cx="398.5" cy="324.8428" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="60" x="407.5" y="327.5">addDump()</text><ellipse cx="398.5" cy="337.7979" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44" x="407.5" y="340.4551">addFix()</text><!--class Command--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="99.8203" id="Command" style="stroke: #A80036; stroke-width: 1.5;" width="91" x="289" y="424"></rect><ellipse cx="304" cy="440" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M306.9731,445.6431 Q306.3921,445.9419 305.7529,446.0913 Q305.1138,446.2407 304.4082,446.2407 Q301.9014,446.2407 300.5815,444.5889 Q299.2617,442.937 299.2617,439.8159 Q299.2617,436.6865 300.5815,435.0347 Q301.9014,433.3828 304.4082,433.3828 Q305.1138,433.3828 305.7612,433.5322 Q306.4087,433.6816 306.9731,433.9805 L306.9731,436.7031 Q306.3423,436.1221 305.7488,435.8523 Q305.1553,435.5825 304.5244,435.5825 Q303.1797,435.5825 302.4949,436.6492 Q301.8101,437.7158 301.8101,439.8159 Q301.8101,441.9077 302.4949,442.9744 Q303.1797,444.041 304.5244,444.041 Q305.1553,444.041 305.7488,443.7712 Q306.3423,443.5015 306.9731,442.9204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59" x="318" y="444.5352">Command</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="290" x2="379" y1="456" y2="456"></line><rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="297" y="464.9775"></rect><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="53" x="309" y="470.6348">command</text><rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="297" y="477.9326"></rect><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="24" x="309" y="483.5898">args</text><ellipse cx="300" cy="493.8877" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="11" x="309" y="496.5449">ID</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="290" x2="379" y1="502.8652" y2="502.8652"></line><polygon fill="#FFFF44" points="300,509.8428,304,513.8428,300,517.8428,296,513.8428" style="stroke: #B38D22; stroke-width: 1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="34" x="309" y="517.5">write()</text><!--class Fix--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="60.9551" id="Fix" style="stroke: #A80036; stroke-width: 1.5;" width="54" x="344.5" y="585"></rect><ellipse cx="362.2" cy="601" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M365.1731,606.6431 Q364.5921,606.9419 363.9529,607.0913 Q363.3138,607.2407 362.6082,607.2407 Q360.1014,607.2407 358.7815,605.5889 Q357.4617,603.937 357.4617,600.8159 Q357.4617,597.6865 358.7815,596.0347 Q360.1014,594.3828 362.6082,594.3828 Q363.3138,594.3828 363.9612,594.5322 Q364.6087,594.6816 365.1731,594.9805 L365.1731,597.7031 Q364.5423,597.1221 363.9488,596.8523 Q363.3553,596.5825 362.7244,596.5825 Q361.3797,596.5825 360.6949,597.6492 Q360.0101,598.7158 360.0101,600.8159 Q360.0101,602.9077 360.6949,603.9744 Q361.3797,605.041 362.7244,605.041 Q363.3553,605.041 363.9488,604.7712 Q364.5423,604.5015 365.1731,603.9204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="16" x="376.8" y="605.5352">Fix</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="345.5" x2="397.5" y1="617" y2="617"></line><ellipse cx="355.5" cy="628.9775" fill="none" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="28" x="364.5" y="631.6348">unfix</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="345.5" x2="397.5" y1="637.9551" y2="637.9551"></line><!--class Compute--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="48" id="Compute" style="stroke: #A80036; stroke-width: 1.5;" width="84" x="433.5" y="591.5"></rect><ellipse cx="448.5" cy="607.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M451.4731,613.1431 Q450.8921,613.4419 450.2529,613.5913 Q449.6138,613.7407 448.9082,613.7407 Q446.4014,613.7407 445.0815,612.0889 Q443.7617,610.437 443.7617,607.3159 Q443.7617,604.1865 445.0815,602.5347 Q446.4014,600.8828 448.9082,600.8828 Q449.6138,600.8828 450.2612,601.0322 Q450.9087,601.1816 451.4731,601.4805 L451.4731,604.2031 Q450.8423,603.6221 450.2488,603.3523 Q449.6553,603.0825 449.0244,603.0825 Q447.6797,603.0825 446.9949,604.1492 Q446.3101,605.2158 446.3101,607.3159 Q446.3101,609.4077 446.9949,610.4744 Q447.6797,611.541 449.0244,611.541 Q449.6553,611.541 450.2488,611.2712 Q450.8423,611.0015 451.4731,610.4204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="52" x="462.5" y="612.0352">Compute</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="434.5" x2="516.5" y1="623.5" y2="623.5"></line><line style="stroke: #A80036; stroke-width: 1.5;" x1="434.5" x2="516.5" y1="631.5" y2="631.5"></line><!--class Dump--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="48" id="Dump" style="stroke: #A80036; stroke-width: 1.5;" width="67" x="553" y="591.5"></rect><ellipse cx="568" cy="607.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M570.9731,613.1431 Q570.3921,613.4419 569.7529,613.5913 Q569.1138,613.7407 568.4082,613.7407 Q565.9014,613.7407 564.5815,612.0889 Q563.2617,610.437 563.2617,607.3159 Q563.2617,604.1865 564.5815,602.5347 Q565.9014,600.8828 568.4082,600.8828 Q569.1138,600.8828 569.7612,601.0322 Q570.4087,601.1816 570.9731,601.4805 L570.9731,604.2031 Q570.3423,603.6221 569.7488,603.3523 Q569.1553,603.0825 568.5244,603.0825 Q567.1797,603.0825 566.4949,604.1492 Q565.8101,605.2158 565.8101,607.3159 Q565.8101,609.4077 566.4949,610.4744 Q567.1797,611.541 568.5244,611.541 Q569.1553,611.541 569.7488,611.2712 Q570.3423,611.0015 570.9731,610.4204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="35" x="582" y="612.0352">Dump</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="554" x2="619" y1="623.5" y2="623.5"></line><line style="stroke: #A80036; stroke-width: 1.5;" x1="554" x2="619" y1="631.5" y2="631.5"></line><!--class Region--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="48" id="Region" style="stroke: #A80036; stroke-width: 1.5;" width="71" x="6" y="591.5"></rect><ellipse cx="21" cy="607.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M23.9731,613.1431 Q23.3921,613.4419 22.7529,613.5913 Q22.1138,613.7407 21.4082,613.7407 Q18.9014,613.7407 17.5815,612.0889 Q16.2617,610.437 16.2617,607.3159 Q16.2617,604.1865 17.5815,602.5347 Q18.9014,600.8828 21.4082,600.8828 Q22.1138,600.8828 22.7612,601.0322 Q23.4087,601.1816 23.9731,601.4805 L23.9731,604.2031 Q23.3423,603.6221 22.7488,603.3523 Q22.1553,603.0825 21.5244,603.0825 Q20.1797,603.0825 19.4949,604.1492 Q18.8101,605.2158 18.8101,607.3159 Q18.8101,609.4077 19.4949,610.4744 Q20.1797,611.541 21.5244,611.541 Q22.1553,611.541 22.7488,611.2712 Q23.3423,611.0015 23.9731,610.4204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="39" x="35" y="612.0352">Region</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="76" y1="623.5" y2="623.5"></line><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="76" y1="631.5" y2="631.5"></line><!--class Variable--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="48" id="Variable" style="stroke: #A80036; stroke-width: 1.5;" width="80" x="112.5" y="591.5"></rect><ellipse cx="127.5" cy="607.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M130.4731,613.1431 Q129.8921,613.4419 129.2529,613.5913 Q128.6138,613.7407 127.9082,613.7407 Q125.4014,613.7407 124.0815,612.0889 Q122.7617,610.437 122.7617,607.3159 Q122.7617,604.1865 124.0815,602.5347 Q125.4014,600.8828 127.9082,600.8828 Q128.6138,600.8828 129.2612,601.0322 Q129.9087,601.1816 130.4731,601.4805 L130.4731,604.2031 Q129.8423,603.6221 129.2488,603.3523 Q128.6553,603.0825 128.0244,603.0825 Q126.6797,603.0825 125.9949,604.1492 Q125.3101,605.2158 125.3101,607.3159 Q125.3101,609.4077 125.9949,610.4744 Q126.6797,611.541 128.0244,611.541 Q128.6553,611.541 129.2488,611.2712 Q129.8423,611.0015 130.4731,610.4204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="48" x="141.5" y="612.0352">Variable</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="113.5" x2="191.5" y1="623.5" y2="623.5"></line><line style="stroke: #A80036; stroke-width: 1.5;" x1="113.5" x2="191.5" y1="631.5" y2="631.5"></line><!--class Molecule--><rect fill="#FEFECE" filter="url(#fg657275mze3t)" height="48" id="Molecule" style="stroke: #A80036; stroke-width: 1.5;" width="82" x="227.5" y="591.5"></rect><ellipse cx="242.5" cy="607.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"></ellipse><path d="M245.4731,613.1431 Q244.8921,613.4419 244.2529,613.5913 Q243.6138,613.7407 242.9082,613.7407 Q240.4014,613.7407 239.0815,612.0889 Q237.7617,610.437 237.7617,607.3159 Q237.7617,604.1865 239.0815,602.5347 Q240.4014,600.8828 242.9082,600.8828 Q243.6138,600.8828 244.2612,601.0322 Q244.9087,601.1816 245.4731,601.4805 L245.4731,604.2031 Q244.8423,603.6221 244.2488,603.3523 Q243.6553,603.0825 243.0244,603.0825 Q241.6797,603.0825 240.9949,604.1492 Q240.3101,605.2158 240.3101,607.3159 Q240.3101,609.4077 240.9949,610.4744 Q241.6797,611.541 243.0244,611.541 Q243.6553,611.541 244.2488,611.2712 Q244.8423,611.0015 245.4731,610.4204 Z "></path><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50" x="256.5" y="612.0352">Molecule</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="228.5" x2="308.5" y1="623.5" y2="623.5"></line><line style="stroke: #A80036; stroke-width: 1.5;" x1="228.5" x2="308.5" y1="631.5" y2="631.5"></line><!--link Command to Fix--><path d="M340.1013,544.18 C343.811,558.4373 348.2191,572.7255 352.7201,584.7285 " fill="none" id="Command-Fix" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="none" points="333.1874,545.3614,335.3854,524.286,346.8099,542.132,333.1874,545.3614" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Fix to Command--><path d="M372.6151,571.5914 C369.7537,556.6057 365.4714,539.7338 360.634,524.286 " fill="none" id="Fix-Command" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="374.8188,584.7285,377.7711,578.1495,372.8337,572.8938,369.8813,579.4729,374.8188,584.7285" style="stroke: #A80036; stroke-width: 1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="355.4699" y="544.2896">1</text><!--link Command to Compute--><path d="M394.5225,534.2353 C414.4921,554.2758 435.6089,575.4675 451.27,591.1841 " fill="none" id="Command-Compute" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="none" points="389.4373,539.0492,380.2787,519.941,399.3543,529.1672,389.4373,539.0492" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Command to Dump--><path d="M397.8388,508.2525 C437.5677,529.9162 489.7504,558.698 535.5,585 C541.1347,588.2395 547.0847,591.7316 552.8537,595.156 " fill="none" id="Command-Dump" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="none" points="394.4751,514.3915,380.2526,498.6841,401.1661,502.0938,394.4751,514.3915" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Command to Molecule--><path d="M302.5178,542.5679 C294.3876,559.9985 286.175,577.6059 279.8564,591.1526 " fill="none" id="Command-Molecule" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="none" points="296.2469,539.4523,311.045,524.286,308.9346,545.3703,296.2469,539.4523" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Command to Region--><path d="M270.4898,501.7424 C221.7088,523.3307 153.1649,554.6301 94.5,585 C88.8433,587.9284 82.9268,591.1595 77.183,594.3906 " fill="none" id="Command-Region" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="none" points="267.6765,495.3327,288.8019,493.6835,273.3158,508.1467,267.6765,495.3327" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Command to Variable--><path d="M272.5001,522.2032 C242.5281,545.5057 207.8689,572.4522 183.5285,591.3762 " fill="none" id="Command-Variable" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="none" points="268.4878,516.456,288.5737,509.7064,277.0809,527.5086,268.4878,516.456" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Manager to Setting--><path d="M311.5,186.0408 C311.5,202.3829 311.5,218.884 311.5,233.7939 " fill="none" id="Manager-Setting" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="311.5,173.0023,307.5,179.0023,311.5,185.0023,315.5,179.0023,311.5,173.0023" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Manager to Universe--><path d="M256.6215,184.3093 C245.3301,203.611 233.858,223.2214 223.8966,240.2494 " fill="none" id="Manager-Universe" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="263.2361,173.0023,256.7538,176.1614,257.1768,183.3601,263.659,180.201,263.2361,173.0023" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Manager to Group--><path d="M367.4806,184.585 C377.4862,201.4012 387.625,218.4412 396.7599,233.7939 " fill="none" id="Manager-Group" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="360.5889,173.0023,360.2193,180.2039,366.7249,183.3149,367.0944,176.1133,360.5889,173.0023" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Universe to Command--><path d="M240.8328,351.2291 C258.8181,374.8026 279.1659,401.4727 296.2906,423.9184 " fill="none" id="Universe-Command" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="232.7556,340.6422,233.2148,347.8387,240.0344,350.1826,239.5751,342.9862,232.7556,340.6422" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Universe to Molecule--><path d="M208.862,353.5762 C225.3623,426.044 251.6191,541.3608 262.9715,591.2196 " fill="none" id="Universe-Molecule" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="205.9003,340.569,203.3323,347.3073,208.5646,352.2695,211.1326,345.5312,205.9003,340.569" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Universe to Region--><path d="M165.2293,352.6764 C131.1411,425.0859 76.4999,541.1539 52.9305,591.2196 " fill="none" id="Universe-Region" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="170.9291,340.569,164.7545,344.2938,165.8179,351.426,171.9925,347.7013,170.9291,340.569" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Universe to Variable--><path d="M173.7984,353.437 C171.7393,361.3071 169.8978,369.2963 168.5,377 C154.4606,454.3779 152.439,547.8856 152.336,591.2444 " fill="none" id="Universe-Variable" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="177.3032,340.8055,171.8446,345.5176,174.0948,352.3686,179.5534,347.6565,177.3032,340.8055" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Group to Command--><path d="M382.5558,358.5121 C370.5087,380.1619 358.4776,403.7053 349.2297,423.8531 " fill="none" id="Group-Command" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="389.0368,347.0534,382.6013,350.3067,383.1291,357.4984,389.5646,354.2452,389.0368,347.0534" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Group to Command--><path d="M407.8627,358.8115 C397.3295,380.3788 384.7712,403.7981 372.9169,423.8531 " fill="none" id="Group-Command" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="413.4888,347.0534,407.2908,350.7392,408.3093,357.878,414.5073,354.1922,413.4888,347.0534" style="stroke: #A80036; stroke-width: 1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="369.7568" y="413.3493">1</text><!--link Group to Fix--><path d="M427.7424,360.3984 C424.2552,414.3699 416.3618,490.4799 398.5,555 C395.7381,564.9765 391.581,575.4159 387.3512,584.7596 " fill="none" id="Group-Fix" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="428.5374,347.1743,424.1845,352.9234,427.8171,359.1527,432.1701,353.4036,428.5374,347.1743" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Group to Compute--><path d="M455.436,359.7551 C456.9932,365.541 458.3809,371.3408 459.5,377 C474.7561,454.1472 476.1932,547.7657 475.9103,591.1977 " fill="none" id="Group-Compute" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="451.7948,347.1712,449.6202,354.0466,455.1303,358.6983,457.3049,351.8229,451.7948,347.1712" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Group to Dump--><path d="M476.3218,358.875 C479.9002,364.9261 483.3442,371.023 486.5,377 C526.3301,452.4381 562.1216,547.2737 577.9292,591.1591 " fill="none" id="Group-Dump" style="stroke: #A80036; stroke-width: 1.0;"></path><polygon fill="#FFFFFF" points="469.3149,347.3383,469.0106,354.543,475.5441,357.5949,475.8483,350.3902,469.3149,347.3383" style="stroke: #A80036; stroke-width: 1.0;"></polygon><!--link Setting to Command--><path d="M306.0723,347.1453 C305.6367,362.4282 306.1092,378.9084 308.5,394 C309.7868,402.1226 311.7655,410.5427 314.0695,418.7363 " fill="none" id="Setting-Command" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"></path><polygon fill="#A80036" points="315.5429,423.8041,316.871,414.0452,314.1469,419.0029,309.1892,416.2788,315.5429,423.8041" style="stroke: #A80036; stroke-width: 1.0;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="22" x="309.5" y="390.5684">use</text><!--
+@startuml
+class Manager {
+  +Settings
+  +Universe
+  +Groups
+  +addSetting()
+  +createGroups()
+  +getValStr()
+  +executeAll()
+  +outputAll()
+  +showAll()
+}
+
+class Setting {
+  +__dict__
+  +apply()
+  +execute()
+  +output()
+  +show()
+}
+
+class Universe {
+  +addCmd()
+  +addMol()
+  +addReg()
+  +addVar()
+}
+
+class Group {
+  +group
+  +addCmd()
+  +addCmpt()
+  +addDump()
+  +addFix()
+}
+
+class Command {
+  -command
+  -args
+  +ID
+  #write()
+}
+
+class Fix {
+  +unfix
+}
+
+class Compute
+
+class Dump
+
+class Region
+
+class Variable
+
+Command <|- - Fix
+Command <|- - Compute
+Command <|- - Dump
+Command <|- - Molecule
+Command <|- - Region
+Command <|- - Variable
+
+Manager o- - Setting
+Manager o- - Universe
+Manager o- - Group
+
+Universe o- - Command
+Universe o- - Molecule
+Universe o- - Region
+Universe o- - Variable
+
+Group o- - Command
+Group o- - Fix
+Group o- - Compute
+Group o- - Dump
+
+Group o- - "1" Command
+Fix o- - "1" Command
+
+Setting ..> Command : use
+@enduml
+
+PlantUML version 1.2017.13(Thu May 11 01:52:33 JST 2017)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_131-b11
+Operating System: Mac OS X
+OS Version: 10.12.5
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg></p>
+
+    </body>
+    
+    <script>
+(function bindTaskListEvent() {
+  var taskListItemCheckboxes = document.body.getElementsByClassName('task-list-item-checkbox')
+  for (var i = 0; i < taskListItemCheckboxes.length; i++) {
+    var checkbox = taskListItemCheckboxes[i]
+    var li = checkbox.parentElement
+    if (li.tagName !== 'LI') li = li.parentElement
+    if (li.tagName === 'LI') {
+      li.classList.add('task-list-item')
+    }
+  }
+}())    
+</script>
+  </html>

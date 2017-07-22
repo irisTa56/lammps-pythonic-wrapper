@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+build/
+dist/
+lammps_wrapper_interface.egg-info/
+ToDo.md
