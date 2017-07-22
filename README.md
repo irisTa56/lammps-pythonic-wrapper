@@ -14,3 +14,5 @@ python3 setup.py install
 ```
 
 ## Examples
+
+![class_diagram](images/class_diagram.svg)
