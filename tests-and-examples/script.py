@@ -1,5 +1,5 @@
 import itertools as it
-from lammps_wrapper_interface import Manager
+from lammps_pythonic_wrapper import Manager
 
 m = Manager()
 

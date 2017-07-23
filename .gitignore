@@ -2,5 +2,5 @@
 __pycache__/
 build/
 dist/
-lammps_wrapper_interface.egg-info/
+lammps_pythonic_wrapper.egg-info/
 ToDo.md
