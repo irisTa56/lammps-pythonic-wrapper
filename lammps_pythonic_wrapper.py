@@ -37,14 +37,13 @@ class Manager:
 
     def addSetting(self, name):
         """
-        Create an instance of Setting class.
-        You can access the instance via "Manager.Settings" dictionary or as
-        Manager's property.
+        Create an instance of Setting class and returns the instance.
+        You can access the instance via "Manager.Settings" dictionary.
         """
         if name in self.__dict__:
             sys.exit("Error: Duplication of Setting.")
         self.Settings[name] = Setting(name)
-        exec("self.{} = self.Settings[name]".format(name))
+        return self.Settings[name]
 
     def createGroups(self, groupDict):
         """
