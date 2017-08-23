@@ -23,31 +23,32 @@ import sys
 import time
 import os.path
 
-class Manager:
+class LammpsManager:
     """
-    This class creates and accesses Setting, Universe and Group instances.
+    This class creates and accesses CommandAcceptor, Universe and Group
+    instances.
     It also stores IDs of lammps' values (computes and variables).
     """
 
     def __init__(self):
-        self.Settings = {}
+        self.CommandAcceptors = {}
         self.Universe = Universe(self)
         self.Groups = {"all": Group(self, "all")}
         self._valueDict = {}
+        self._numCmd = 0
 
-    def addSetting(self, name):
+    def addCommandAcceptor(self, name):
         """
-        Create an instance of Setting class and returns the instance.
-        You can access the instance via "Manager.Settings" dictionary.
+        Creates an instance of CommandAcceptor class and returns the instance.
         """
-        if name in self.__dict__:
-            sys.exit("Error: Duplication of Setting.")
-        self.Settings[name] = Setting(name)
-        return self.Settings[name]
+        if name in self.CommandAcceptors.keys():
+            sys.exit("Error: Duplication of CommandAcceptor.")
+        self.CommandAcceptors[name] = CommandAcceptor(name)
+        return self.CommandAcceptors[name]
 
     def createGroups(self, groupDict):
         """
-        Create instances of Group class.
+        Creates instances of Group class and returns the instances.
         The instances are defined by a dectipnary like the following.
             {
                 "style": {
@@ -58,15 +59,17 @@ class Manager:
             }
         A value of "None" leads to an empty group by using "group group-ID3
         type 0".
-        You can access the instance via "Manager.Groups" dictionary or as
-        Manager's property.
         """
         for method, groups in groupDict.items():
             for ID, members in groups.items():
-                if ID in self.__dict__:
+                if ID in self.Groups.keys():
                     sys.exit("Error: Duplication of Group.")
                 self.Groups[ID] = Group(self, ID, method, members)
-                exec("self.{} = self.Groups[ID]".format(ID))
+        return self.Groups.values()
+
+    def getUniverse(self):
+        return self.Universe
+
 
     def getValStr(self, *args, Join=True):
         """
@@ -81,18 +84,18 @@ class Manager:
 
     def executeAll(self):
         """
-        Execute all lammps' commands applied to Setting instances in
-        "Manager.Settings" using Lammps Python Wrapper.
+        Execute all lammps' commands applied to CommandAcceptor instances in
+        "Manager.CommandAcceptors" using Lammps Python Wrapper.
         """
         self.lmp = lammps()
-        for setting in self.Settings.values():
+        for setting in self.CommandAcceptors.values():
             setting.execute(self.lmp)
 
     def outputAll(self, filename=None, fileHeader="Lammps' Input",
-                  SettingHeader=True):
+                  SectionHeader=True):
         """
-        Output all lammps' commands applied to Setting instances owned by
-        Manager.
+        Output all lammps' commands applied to CommandAcceptor instances owned
+        by Manager.
         If you do not set "filename", the commands will be printed to standard
         output.
         If you set "filename" with extension of ".md" or ".markdown", the
@@ -104,40 +107,41 @@ class Manager:
             if ext in [".md", ".markdown"]:
                 f = open(filename, 'w')
                 f.write("# {}\n\n".format(fileHeader))
-                for setting in self.Settings.values():
+                for setting in self.CommandAcceptors.values():
                     f.write(setting._markdown())
             else:
                 f = open(filename, 'w')
                 f.write("# {}: {}\n\n".format(fileHeader, str(time.ctime())))
-                for setting in self.Settings.values():
-                    f.write(setting._infile(SettingHeader))
+                for setting in self.CommandAcceptors.values():
+                    f.write(setting._infile(SectionHeader))
         else:
-            for setting in self.Settings.values():
-                setting.output(SettingHeader)
+            for setting in self.CommandAcceptors.values():
+                setting.output(SectionHeader)
 
     def showAll(self):
         """
-        Show IDs and commands of all lammps' commands applied to Setting
-        instances owned by Manager.
+        Show IDs and commands of all lammps' commands applied to
+        CommandAcceptor instances owned by Manager.
         Their arguments are not shown.
         """
-        print("<Settings>")
-        for setting in self.Settings.values():
+        print("<CommandAcceptor>")
+        for setting in self.CommandAcceptors.values():
             print(setting._name)
         print("<Commands>")
-        for setting in self.Settings.values():
+        for setting in self.CommandAcceptors.values():
             print("# {}".format(setting._name))
             setting.show()
 
 
-class Setting:
+class CommandAcceptor:
     """
     This class has lammps' commands as its properties, and outputs or executes
     the commands.
     You can assign commands in two ways:
     one is to substitute arguments in a property whose name is a command,
-    something like "Setting.run = 1000" and the other is to pass one or more
-    instances of Command or its sub-class to Setting.apply().
+    something like "CommandAcceptor.run = 1000", and the other is to pass one
+    or more instances of Command or its sub-class to CommandAcceptor.apply()
+    method.
     """
 
     def __init__(self, name):
@@ -147,7 +151,7 @@ class Setting:
 
     def apply(self, strings, *Commands):
         """
-        Apply one or more instances of Command to the Setting.
+        Apply one or more instances of Command to the CommandAcceptor.
         You need to assign one or more strings to the group of the instances
         for identification; the strings can be a sentence including " ", "-",
         ",", ".", "*", "/".
@@ -161,8 +165,8 @@ class Setting:
 
     def execute(self, lmp):
         """
-        Execute all lammps' commands applied to the Setting using Lammps Python
-        Wrapper.
+        Execute all lammps' commands applied to the CommandAcceptor using
+        Lammps Python rapper.
         It is also called from Manager.executeAll().
         """
         for key, val in self.__dict__.items():
@@ -182,7 +186,7 @@ class Setting:
 
     def output(self, Header=False):
         """
-        Print all lammps' commands applied to the Setting to standard
+        Print all lammps' commands applied to the CommandAcceptor to standard
         output.
         It is also called from Manager.outputAll().
         """
@@ -205,7 +209,8 @@ class Setting:
 
     def show(self):
         """
-        Show IDs and commands of all lammps' commands applied to the Setting.
+        Show IDs and commands of all lammps' commands applied to the
+        CommandAcceptor.
         It is also called from Manager.showAll().
         """
         for key, val in self.__dict__.items():
@@ -285,45 +290,45 @@ class Universe:
 
     def __init__(self, manager):
         self._manager = manager
-        self.commands = {}
-        self.molecules = {}
-        self.regions = {}
-        self.variables = {}
+        self.cmds = {}
+        self.mols = {}
+        self.regs = {}
+        self.vars = {}
 
-    def addCmd(self, command, *args, ID=None):
+    def cmd(self, command, *args, ID=None):
         """
         Add an instance of Command, which is not associated with any particular
         group, to Universe.
         """
         if not ID:
-            ID = command + str(len(self.commands))
-        self.commands[ID] = Command(self._manager, command, ID, *args)
-        return self.commands[ID]
+            ID = command + str(len(self.cmds))
+        self.cmds[ID] = Command(self._manager, command, ID, *args)
+        return self.cmds[ID]
 
-    def addMol(self, ID, *args):
+    def mol(self, ID, *args):
         """
         Add an instance of Molecule to Universe.
         """
         args = [ID] + list(args)
-        self.molecules[ID] = Molecule(self._manager, ID, *args)
-        return self.molecules[ID]
+        self.mols[ID] = Molecule(self._manager, ID, *args)
+        return self.mols[ID]
 
-    def addReg(self, ID, *args):
+    def reg(self, ID, *args):
         """
         Add an instance of Region to Universe.
         """
         args = [ID] + list(args)
-        self.regions[ID] = Region(self._manager, ID, *args)
-        return self.regions[ID]
+        self.regs[ID] = Region(self._manager, ID, *args)
+        return self.regs[ID]
 
-    def addVar(self, ID, *args):
+    def var(self, ID, *args):
         """
         Add an instance of Variable to Universe.
         """
         args = [ID] + list(args)
-        self.variables[ID] = Variable(self._manager, ID, *args)
+        self.vars[ID] = Variable(self._manager, ID, *args)
         self._manager._valueDict[ID] = "v_"
-        return self.variables[ID]
+        return self.vars[ID]
 
 
 class Group:
@@ -342,43 +347,44 @@ class Group:
     def __init__(self, manager, ID, method=None, members=None):
         self._manager = manager
         self.ID = ID
-        self.commands = {}
+        self.cmds = {}
         self.fixes = {}
-        self.computes = {}
+        self.cmpts = {}
         self.dumps = {}
         if method and members:
-            self.group = self.addCmd("group", "{} {}".format(
+            self.group = self.cmd("group", "{} {}".format(
                 method, " ".join(map(str, members))
                 if hasattr(members, '__iter__') and not isinstance(members, str)
                 else str(members)
             ))
         elif method and not members:
-            self.group = self.addCmd("group", "type 0")
+            self.group = self.cmd("group", "type 0")
         else:
             self.group = None
 
-    def addCmd(self, command, *args, ID=None):
+    def cmd(self, command, *args, ID=None):
         """
         Add an instance of Command, which is associated with a particular
         group, to Group.
         """
+        self._manager._numCmd += 1
         if not ID:
-            ID = command + str(len(self.commands))
+            ID = command + str(len(self.cmds))
         args = [self.ID] + list(args)
-        self.commands[ID] = Command(self._manager, command, ID, *args)
-        return self.commands[ID]
+        self.cmds[ID] = Command(self._manager, command, ID, *args)
+        return self.cmds[ID]
 
-    def addCmpt(self, ID, *args):
+    def cmpt(self, ID, *args):
         """
         Add an instance of Compute to Group.
         """
         fullID = "{}_{}".format(ID, self.ID)
         args = [fullID, self.ID] + list(args)
-        self.computes[ID] = Compute(self._manager, fullID, *args)
+        self.cmpts[ID] = Compute(self._manager, fullID, *args)
         self._manager._valueDict[fullID] = "c_"
-        return self.computes[ID]
+        return self.cmpts[ID]
 
-    def addDump(self, ID, *args):
+    def dump(self, ID, *args):
         """
         Add an instance of Dump to Group.
         """
@@ -387,7 +393,7 @@ class Group:
         self.dumps[ID] = Dump(self._manager, fullID, *args)
         return self.dumps[ID]
 
-    def addFix(self, ID, *args):
+    def fix(self, ID, *args):
         """
         Add an instance of Fix to Group.
         """
@@ -420,8 +426,8 @@ class Fix(Command):
 
     def __init__(self, manager, ID, *args):
         super().__init__(manager, "fix", ID, *args)
-        self.unfix = self._manager.Universe.addCmd(
-            "unfix", self.ID, ID="UN{}".format(self.ID)
+        self.unfix = self._manager.Universe.cmd(
+            "unfix", self.ID, ID="UN_{}".format(self.ID)
         )
 
 

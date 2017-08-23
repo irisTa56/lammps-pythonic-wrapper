@@ -1,4 +1,4 @@
-# Lammps' Input: Sat Aug 19 12:30:25 2017
+# Lammps' Input: Wed Aug 23 12:00:11 2017
 
 # System
 
@@ -8,7 +8,7 @@ atom_style      full
 dimension       3
 boundary        p p f
 
-read_data       ../DATA/data.N72onH1_confined
+read_data       ../DATA/data.N72onEH1_confined
 
 # Interaction
 
@@ -50,7 +50,6 @@ neigh_modify    exclude type 12 16
 neigh_modify    exclude type 14 14
 neigh_modify    exclude type 14 16
 neigh_modify    exclude type 16 16
-
 neigh_modify    exclude type  5  5
 neigh_modify    exclude type  5  7
 neigh_modify    exclude type  5  9
