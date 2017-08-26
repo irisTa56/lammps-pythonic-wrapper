@@ -18,11 +18,10 @@ NumSteps = 2000000
 
 # Create Manager
 
-m = LammpsManager()
-univ = m.getUniverse()
+m = LammpsManager(filename="in.heat")
+u = m.getUniverse()
 
-All, lBase, lBath, lSurf, lFree, uBase, uBath, uSurf, uFree, \
-lSolid, uSolid, liq = m.createGroups({
+groups = m.getGroups({
     "type": {
         "lBase": 4,
         "lBath": 6,
@@ -38,197 +37,169 @@ lSolid, uSolid, liq = m.createGroups({
         "uSolid": ["uBase", "uBath", "uFree"]
     },
     "molecule": {
-        "liq": range(1, NumMolecules+1)
+        "liq": range(1, NumMolecules + 1)
     }
 })
 
+all, lBase, lBath, lSurf, lFree, uBase, uBath, uSurf, uFree, lSolid, uSolid, liq = groups
+
 # Advance setting
 
-readData = univ.cmd("read_data", DataFileName)
-readForceField = univ.cmd("include", ForceFieldFileName)
-
-excludePair = {key: [univ.cmd(
-    "neigh_modify", "exclude type {:2d} {:2d}".format(pair[0], pair[1])
-) for pair in list(it.combinations_with_replacement(
-    [2*i+n+4 for i in range(7)], 2
-))] for n, key in enumerate(["lower", "upper"])}
-
-lSolidSet = [lBase.fix("freeze", "setforce 0.0 0.0 0.0")]
-
-uSolidSet = [
-    uBase.fix("load", "aveforce NULL NULL {fz}".format(fz=NormalForce)),
-    uBase.fix("freeZ", "setforce 0.0 0.0 NULL"),
-    uBase.cmpt("tempZ", "temp/partial 0 0 1"),
-    uBase.fix("damper", "langevin 0 0 {damp} {seed}".format(
-        damp=100, seed=RandomSeed
-    ))
+exclusions = [
+    u.cmd("neigh_modify").arg("exclude type {} {}".format(ij[0], ij[1]))
+    for types in [[4, 6, 8, 10, 12, 14, 16], [5, 7, 9, 11, 13, 15, 17]]
+    for ij in list(it.combinations_with_replacement(types, 2))
 ]
 
-uSolidSet.append(univ.cmd("fix_modify", "{fix} temp {cmpt}".format(
-    fix=uSolidSet[-1].ID, cmpt=uSolidSet[-2].ID
-)))
+initSet = [lBase.fix("freeze").arg("setforce 0.0 0.0 0.0")]
 
-for s, g in zip([lSolidSet, uSolidSet], [lBath, uBath]):
-    s.append(g.cmpt("noBiasTemp", "temp/com"))
-    s.append(g.fix(
-        "heat", "langevin {temp1} {temp2} {damp} {seed}".format(
-            temp1=TemperatureStart, temp2=TemperatureStop,
-            damp=100, seed=RandomSeed
-        )
+initSet.append(uBase.fix("load").arg(
+    "aveforce NULL NULL {fz}".format(fz=NormalForce)
+))
+initSet.append(uBase.fix("freeZ").arg("setforce 0.0 0.0 NULL"))
+
+initSet.append(uBase.cmpt("tempZ").arg("temp/partial 0 0 1"))
+initSet.append(uBase.fix("damper").arg(
+    "langevin 0 0 {damp} {seed}".format(damp=100, seed=RandomSeed)
+))
+initSet.append(u.cmd("fix_modify").arg(
+    "{fix} temp {cmpt}".format(fix=initSet[-1].ID, cmpt=initSet[-2].ID)
+))
+
+noBiasT = {}
+heat = {}
+
+for g in [lBath, uBath]:
+    noBiasT[g.ID] = g.cmpt("noBiasTemp").arg("temp/com")
+    heat[g.ID]  = g.fix("heat").arg("langevin {T1} {T2} {damp} {seed}".format(
+        T1=TemperatureStart, T2=TemperatureStop, damp=100, seed=RandomSeed
     ))
-    s.append(univ.cmd("fix_modify", "{fix} temp {cmpt}".format(
-        fix=s[-1].ID, cmpt=s[-2].ID
-    )))
+    initSet.extend([noBiasT[g.ID], heat[g.ID], u.cmd("fix_modify").arg(
+        "{fix} temp {cmpt}".format(fix=heat[g.ID].ID, cmpt=noBiasT[g.ID].ID)
+    )])
 
 staySet = []
 for g in [lBath, uBath]:
-    staySet.append(g.fixes["heat"].unfix)
-    staySet.append(g.fix(
-        "thermostat", "langevin {temp} {temp} {damp} {seed}".format(
-            temp=TemperatureStop, damp=100, seed=RandomSeed
-        )
-    ))
-    staySet.append(univ.cmd("fix_modify", "{fix} temp {cmpt}".format(
-        fix=staySet[-1].ID, cmpt=g.cmpts["noBiasTemp"].ID
+    staySet.append(heat[g.ID].unfix)
+    staySet.append(g.fix("thermo").arg("langevin {T} {T} {damp} {seed}".format(
+        T=TemperatureStop, damp=100, seed=RandomSeed
+    )))
+    staySet.append(u.cmd("fix_modify").arg("{fix} temp {cmpt}".format(
+        fix=staySet[-1].ID, cmpt=noBiasT[g.ID].ID
     )))
 
 # System
 
-sy = m.addCommandAcceptor("System")
+u.cmd("processors").arg("* * 1").w()
+u.cmd("units").arg("real").w()
+u.cmd("atom_style").arg("full").w()
+u.cmd("dimension").arg("3").w()
+u.cmd("boundary").arg("p p f").w()
 
-sy.processors = "* * 1"
-sy.units = "real"
-sy.atom_style = "full"
-sy.dimension = 3
-sy.boundary = "p p f"
-
-sy.apply("Read data.* file", readData)
+u.cmd("read_data").arg(DataFileName).w()
 
 # Interaction
 
-ia = m.addCommandAcceptor("Interaction")
+u.cmd("include").arg(ForceFieldFileName).w()
 
-ia.apply("Read forcefield.* file", readForceField)
+u.cmd("dielectric").arg("1.0").w()
+u.cmd("pair_modify").arg("shift yes mix sixthpower").w()
+u.cmd("special_bonds").arg("lj/coul 0.0 0.0 1.0").w()
+u.cmd("neighbor").arg("2.0 bin").w()
+u.cmd("neigh_modify").arg("delay 0 one 5000").w()
+u.cmd("kspace_style").arg("pppm 1e-5").w()
+u.cmd("kspace_modify").arg("slab 3.0").w()
 
-ia.dielectric = 1.0
-ia.pair_modify = "shift yes mix sixthpower"
-ia.special_bonds = "lj/coul 0.0 0.0 1.0"
-ia.neighbor = "2.0 bin"
-ia.neigh_modify = "delay 0 one 5000"
-ia.kspace_style = "pppm 1e-5"
-ia.kspace_modify = "slab 3.0"
-
-for key, val in excludePair.items():
-    ia.apply("Exclude pair interaction between solid atoms", *val)
+for cmd in exclusions:
+    cmd.w()
 
 # Dynamics
 
-dy = m.addCommandAcceptor("Dynamics")
-
-dy.timestep = 1.0
-dy.run_style = "respa 2 2 bond 1 angle 2 dihedral 2 improper 2 pair 2 kspace 2"
+u.cmd("timestep").arg("1.0").w()
+u.cmd("run_style").arg(
+    "respa 2 2 bond 1 angle 2 dihedral 2 improper 2 pair 2 kspace 2"
+).w()
 
 # Grouping
 
-m.addCommandAcceptor("Grouping").apply(
-    "Create groups", *[g.group for g in m.Groups.values()]
-)
+for cmd in [g.group for g in groups if g.group]:
+    cmd.w()
 
 # Initial
 
-ini = m.addCommandAcceptor("Initial")
+all.fix("NVE").arg("nve").w()
 
-ini.apply("Apply NVE", All.fix("NVE", "nve"))
-ini.apply("Initial settings for lower solid atoms", *lSolidSet)
-ini.apply("Initial settings for upper solid atoms", *uSolidSet)
+for cmd in initSet:
+    cmd.w()
 
 # Monitor
 
-mon = m.addCommandAcceptor("Monitor")
+u.cmd("thermo").arg(1000).w()
+u.cmd("thermo_style").arg("multi").w()
 
-mon.thermo = 1000
-mon.thermo_style = "multi"
-
-for g, interval in zip([All, liq], [10000, 1000]):
+for g, interval in zip([all, liq], [10000, 1000]):
     directory = "dumps_{}".format(g.ID)
-    mon.apply(
-        "Set dump",
-        univ.cmd("shell", "mkdir {dir}".format(dir=directory)),
-        g.dump("myDump", "custom {inr} {dir}/atom.*.dump {args}".format(
-            inr=interval, dir=directory, args="id type xu yu zu vx vy vz"
-        ))
-    )
+    u.cmd("shell").arg("mkdir", directory).w()
+    g.dump("myDump").arg("custom {inr} {dir}/atom.*.dump {args}".format(
+        inr=interval, dir=directory, args="id type xu yu zu vx vy vz"
+    )).w()
 
-tmpKe = All.cmpt("atomicK", "ke/atom")
-tmpTemp = univ.var("atomicT", "atom {val}*335.514175".format(
-    val=m.getValStr(tmpKe)
-))
-tmpVx = univ.var("atomicVx", "atom vx")
-mon.apply("Calculate temperature of each atom", tmpKe, tmpTemp, tmpVx)
+atomK = all.cmpt("atomK").arg("ke/atom").w()
+atomT = u.var("atomT").arg("atom {val}*335.514175".format(val=atomK.ref)).w()
+atomVx = u.var("atomicVx").arg("atom vx").w()
 
-for g in [All, liq]:
-    chunk = g.cmpt(
-        "chunkZ",
-        "chunk/atom bin/1d z {origin} {delta} bound z {minz} {maxz}".format(
-            origin=0.0, delta=1.0, minz=0.0, maxz=100.0
+for g in [all, liq]:
+    chunk = g.cmpt("chunkZ").arg(
+        "chunk/atom bin/1d z {orig} {d} bound z {min} {max}".format(
+            orig=0.0, d=1.0, min=0.0, max=100.0
         )
-    )
-    mon.apply(
-        "Output temperature distribution along z axis", chunk,
-        g.fix(
-            "distroZ",
-            "ave/chunk 1 {dur} {dur} {chunk} {vals} file {file}".format(
-                dur=100000, chunk=chunk.ID, vals=m.getValStr(tmpTemp, tmpVx),
-                file="distroZ_{}.dat".format(g.ID)
-            )
+    ).w()
+    g.fix("distroZ").arg(
+        "ave/chunk 1 {dur} {dur} {chunk} {vals} file {file}".format(
+            dur=100000, chunk=chunk.ID, vals=" ".join([atomT.ref, atomVx.ref]),
+            file="distroZ_{}.dat".format(g.ID)
         )
-    )
+    ).w()
 
-solidVals = [univ.var(
-    "{}Fx".format(g.ID), "equal fcm({},x)".format(g.ID)
-) for g in [lBase, lSolid, uBase, uSolid]]
-solidVals.append(univ.var("uBaseFz", "equal fcm(uBase,z)"))
-solidVals.extend([univ.var(
-    "{}Z".format(g.ID), "equal xcm({},z)".format(g.ID)
-) for g in [lSurf, uSurf]])
-solidVals.append(univ.var("uBaseFz2", "equal {val}*{val}".format(
-    val=m.getValStr("uBaseFz")
-)))
-solidVals.append(univ.var("gap", "equal {vals[0]}-{vals[1]}".format(
-    vals=m.getValStr("uSurfZ", "lSurfZ", Join=False)
-)))
-mon.apply("Values associated with solid atoms", *solidVals)
+solVals = [
+    u.var("{}Fx".format(g.ID)).arg("equal fcm({},x)".format(g.ID)).w()
+    for g in [lBase, lSolid, uBase, uSolid]
+]
 
-mon.apply("Output values associated with solid atoms", All.fix(
-    "SolVals", "ave/time 1 {dur} {dur} {vals} file {file}".format(
-        dur=1000, vals=m.getValStr(*solidVals), file="solidVals.dat"
-    )
-))
+uBaseFz = u.var("uBaseFz").arg("equal fcm(uBase,z)").w()
+lSurfZ, uSurfZ = [
+    u.var("{}Z".format(g.ID)).arg("equal xcm({},z)".format(g.ID)).w()
+    for g in [lSurf, uSurf]
+]
 
-liqVal = liq.cmpt("temp", "temp")
-mon.apply("Values associated with liquid atoms", liqVal)
+solVals.extend([
+    uBaseFz, lSurfZ, uSurfZ,
+    u.var("uFz2").arg("equal {v}*{v}".format(v=uBaseFz.ref)).w(),
+    u.var("gap").arg("equal {u}-{v}".format(u=uSurfZ.ref, v=lSurfZ.ref)).w()
+])
 
-mon.apply("Outpt values associated with liquid atoms", All.fix(
-    "LiqVals", "ave/time 1 {dur} {dur} {vals} file {file}".format(
-        dur=1000, vals=m.getValStr(liqVal), file="liqVals.dat"
-    )
-))
+all.fix("SolVals").arg("ave/time 1 {dur} {dur} {vals} file {file}".format(
+    dur=1000, vals=" ".join([v.ref for v in solVals]), file="Vals_sol.dat"
+)).w()
+
+liqVal = liq.cmpt("temp").arg("temp").w()
+
+all.fix("LiqVals").arg("ave/time 1 {dur} {dur} {vals} file {file}".format(
+    dur=1000, vals=liqVal.ref, file="Vals_liq.dat"
+)).w()
 
 # Run Heat
 
-heat = m.addCommandAcceptor("Heat")
-
-heat.log = "log.heat append"
-heat.run = (TemperatureStop - TemperatureStart) * StepPerKelvin
-heat.write_data = "data.{}_heat nocoeff".format(SimulationName)
+u.cmd("log").arg("log.heat append").w()
+u.cmd("run").arg((TemperatureStop - TemperatureStart) * StepPerKelvin).w()
+u.cmd("write_data").arg("data.{}_heat nocoeff".format(SimulationName)).w()
 
 # Run Stay
 
-stay = m.addCommandAcceptor("Stay")
+u.cmd("log").arg("log.stay append").w()
 
-stay.log = "log.stay append"
-stay.apply("Stop heating and apply thermostat.", *staySet)
-stay.run = NumSteps
-stay.write_data = "data.{}_stay nocoeff".format(SimulationName)
+for cmd in staySet:
+    cmd.w()
 
-m.outputAll(filename="in.heat")
+u.cmd("run").arg(NumSteps).w()
+u.cmd("write_data").arg("data.{}_stay nocoeff".format(SimulationName)).w()

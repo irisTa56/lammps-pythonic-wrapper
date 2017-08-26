@@ -33,10 +33,9 @@ If&nbsp;not,&nbsp;see&nbsp;&lt;<a href="http://www.gnu.org/licenses/">http://www
 <font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
-</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sys.html">sys</a><br>
 </td><td width="25%" valign=top><a href="time.html">time</a><br>
-</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -59,8 +58,7 @@ If&nbsp;not,&nbsp;see&nbsp;&lt;<a href="http://www.gnu.org/licenses/">http://www
 </font></dt></dl>
 </dd>
 <dt><font face="helvetica, arial"><a href="lammps_pythonic_wrapper.html#Group">Group</a>
-</font></dt><dt><font face="helvetica, arial"><a href="lammps_pythonic_wrapper.html#Manager">Manager</a>
-</font></dt><dt><font face="helvetica, arial"><a href="lammps_pythonic_wrapper.html#Setting">Setting</a>
+</font></dt><dt><font face="helvetica, arial"><a href="lammps_pythonic_wrapper.html#LammpsManager">LammpsManager</a>
 </font></dt><dt><font face="helvetica, arial"><a href="lammps_pythonic_wrapper.html#Universe">Universe</a>
 </font></dt></dl>
 </dd>
@@ -73,12 +71,15 @@ If&nbsp;not,&nbsp;see&nbsp;&lt;<a href="http://www.gnu.org/licenses/">http://www
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>This&nbsp;class&nbsp;offers&nbsp;any&nbsp;kind&nbsp;of&nbsp;lammps'&nbsp;command&nbsp;which&nbsp;does&nbsp;not&nbsp;have&nbsp;its&nbsp;own<br>
-ID&nbsp;in&nbsp;the&nbsp;lammps&nbsp;syntax.<br>&nbsp;</tt></td></tr>
+ID&nbsp;in&nbsp;the&nbsp;lammps&nbsp;syntax&nbsp;except&nbsp;for&nbsp;"group".<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Command-__init__"><strong>__init__</strong></a>(self, manager, command, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Command-__init__"><strong>__init__</strong></a>(self, manager, command)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
-<dl><dt><a name="Command-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Command-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Command-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -104,11 +105,14 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Compute-__init__"><strong>__init__</strong></a>(self, manager, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Compute-__init__"><strong>__init__</strong></a>(self, manager, ID)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
 Methods inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><a name="Compute-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Compute-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Compute-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
@@ -134,11 +138,14 @@ Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">C
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Dump-__init__"><strong>__init__</strong></a>(self, manager, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Dump-__init__"><strong>__init__</strong></a>(self, manager, ID)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
 Methods inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><a name="Dump-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Dump-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Dump-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
@@ -164,11 +171,14 @@ Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">C
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Fix-__init__"><strong>__init__</strong></a>(self, manager, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Fix-__init__"><strong>__init__</strong></a>(self, manager, ID)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
 Methods inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><a name="Fix-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Fix-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Fix-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
@@ -198,14 +208,14 @@ foo.commands["cmd1"].<br>&nbsp;</tt></td></tr>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Group-__init__"><strong>__init__</strong></a>(self, manager, ID, method=None, members=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
-<dl><dt><a name="Group-addCmd"><strong>addCmd</strong></a>(self, command, *args, ID=None)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Command">Command</a>,&nbsp;which&nbsp;is&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular<br>
+<dl><dt><a name="Group-cmd"><strong>cmd</strong></a>(self, command)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Command">Command</a>,&nbsp;which&nbsp;is&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular<br>
 group,&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
 
-<dl><dt><a name="Group-addCmpt"><strong>addCmpt</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Compute">Compute</a>&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
+<dl><dt><a name="Group-cmpt"><strong>cmpt</strong></a>(self, ID)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Compute">Compute</a>&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
 
-<dl><dt><a name="Group-addDump"><strong>addDump</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Dump">Dump</a>&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
+<dl><dt><a name="Group-dump"><strong>dump</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Dump">Dump</a>&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
 
-<dl><dt><a name="Group-addFix"><strong>addFix</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Fix">Fix</a>&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
+<dl><dt><a name="Group-fix"><strong>fix</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Fix">Fix</a>&nbsp;to&nbsp;<a href="#Group">Group</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -219,19 +229,16 @@ Data descriptors defined here:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Manager">class <strong>Manager</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="LammpsManager">class <strong>LammpsManager</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>This&nbsp;class&nbsp;creates&nbsp;and&nbsp;accesses&nbsp;<a href="#Setting">Setting</a>,&nbsp;<a href="#Universe">Universe</a>&nbsp;and&nbsp;<a href="#Group">Group</a>&nbsp;instances.<br>
-It&nbsp;also&nbsp;stores&nbsp;IDs&nbsp;of&nbsp;lammps'&nbsp;values&nbsp;(computes&nbsp;and&nbsp;variables).<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>This&nbsp;class&nbsp;creates&nbsp;and&nbsp;accesses&nbsp;<a href="#Universe">Universe</a>&nbsp;and&nbsp;<a href="#Group">Group</a>&nbsp;instances.<br>
+You&nbsp;can&nbsp;specify&nbsp;a&nbsp;filename&nbsp;which&nbsp;lammps'&nbsp;commands&nbsp;will&nbsp;be&nbsp;written&nbsp;on.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Manager-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="LammpsManager-__init__"><strong>__init__</strong></a>(self, filename=None, fileheader='Lammps Simulation')</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
-<dl><dt><a name="Manager-addSetting"><strong>addSetting</strong></a>(self, name)</dt><dd><tt>Create&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Setting">Setting</a>&nbsp;class&nbsp;and&nbsp;returns&nbsp;the&nbsp;instance.<br>
-You&nbsp;can&nbsp;access&nbsp;the&nbsp;instance&nbsp;via&nbsp;"<a href="#Manager">Manager</a>.Settings"&nbsp;dictionary.</tt></dd></dl>
-
-<dl><dt><a name="Manager-createGroups"><strong>createGroups</strong></a>(self, groupDict)</dt><dd><tt>Create&nbsp;instances&nbsp;of&nbsp;<a href="#Group">Group</a>&nbsp;class.<br>
+<dl><dt><a name="LammpsManager-getGroups"><strong>getGroups</strong></a>(self, groupDict)</dt><dd><tt>Creates&nbsp;instances&nbsp;of&nbsp;<a href="#Group">Group</a>&nbsp;class&nbsp;and&nbsp;returns&nbsp;the&nbsp;instances.<br>
 The&nbsp;instances&nbsp;are&nbsp;defined&nbsp;by&nbsp;a&nbsp;dectipnary&nbsp;like&nbsp;the&nbsp;following.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"style":&nbsp;{<br>
@@ -240,28 +247,10 @@ The&nbsp;instances&nbsp;are&nbsp;defined&nbsp;by&nbsp;a&nbsp;dectipnary&nbsp;lik
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"group-ID3":&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-A&nbsp;value&nbsp;of&nbsp;"None"&nbsp;leads&nbsp;to&nbsp;an&nbsp;empty&nbsp;group&nbsp;by&nbsp;using&nbsp;"group&nbsp;group-ID3<br>
-type&nbsp;0".<br>
-You&nbsp;can&nbsp;access&nbsp;the&nbsp;instance&nbsp;via&nbsp;"<a href="#Manager">Manager</a>.Groups"&nbsp;dictionary&nbsp;or&nbsp;as<br>
-<a href="#Manager">Manager</a>'s&nbsp;property.</tt></dd></dl>
+A&nbsp;value&nbsp;of&nbsp;"None"&nbsp;leads&nbsp;to&nbsp;an&nbsp;empty&nbsp;group&nbsp;by&nbsp;using&nbsp;lammps'&nbsp;command&nbsp;of<br>
+"group&nbsp;group-ID3&nbsp;type&nbsp;0".</tt></dd></dl>
 
-<dl><dt><a name="Manager-executeAll"><strong>executeAll</strong></a>(self)</dt><dd><tt>Execute&nbsp;all&nbsp;lammps'&nbsp;commands&nbsp;applied&nbsp;to&nbsp;<a href="#Setting">Setting</a>&nbsp;instances&nbsp;in<br>
-"<a href="#Manager">Manager</a>.Settings"&nbsp;using&nbsp;Lammps&nbsp;Python&nbsp;Wrapper.</tt></dd></dl>
-
-<dl><dt><a name="Manager-getValStr"><strong>getValStr</strong></a>(self, *args, Join=True)</dt><dd><tt>Get&nbsp;variables&nbsp;and&nbsp;computes&nbsp;in&nbsp;the&nbsp;style&nbsp;of&nbsp;"v_***"&nbsp;or&nbsp;"c_***".<br>
-This&nbsp;function&nbsp;can&nbsp;take&nbsp;both&nbsp;of&nbsp;IDs&nbsp;and&nbsp;instances&nbsp;of&nbsp;<a href="#Variable">Variable</a>/<a href="#Compute">Compute</a>.</tt></dd></dl>
-
-<dl><dt><a name="Manager-outputAll"><strong>outputAll</strong></a>(self, filename=None, fileHeader="Lammps' Input", SettingHeader=True)</dt><dd><tt>Output&nbsp;all&nbsp;lammps'&nbsp;commands&nbsp;applied&nbsp;to&nbsp;<a href="#Setting">Setting</a>&nbsp;instances&nbsp;owned&nbsp;by<br>
-<a href="#Manager">Manager</a>.<br>
-If&nbsp;you&nbsp;do&nbsp;not&nbsp;set&nbsp;"filename",&nbsp;the&nbsp;commands&nbsp;will&nbsp;be&nbsp;printed&nbsp;to&nbsp;standard<br>
-output.<br>
-If&nbsp;you&nbsp;set&nbsp;"filename"&nbsp;with&nbsp;extension&nbsp;of&nbsp;".md"&nbsp;or&nbsp;".markdown",&nbsp;the<br>
-commands&nbsp;will&nbsp;be&nbsp;written&nbsp;in&nbsp;the&nbsp;style&nbsp;of&nbsp;markdown.<br>
-Otherwise,&nbsp;the&nbsp;commands&nbsp;will&nbsp;be&nbsp;written&nbsp;in&nbsp;the&nbsp;style&nbsp;of&nbsp;lammps'&nbsp;input.</tt></dd></dl>
-
-<dl><dt><a name="Manager-showAll"><strong>showAll</strong></a>(self)</dt><dd><tt>Show&nbsp;IDs&nbsp;and&nbsp;commands&nbsp;of&nbsp;all&nbsp;lammps'&nbsp;commands&nbsp;applied&nbsp;to&nbsp;<a href="#Setting">Setting</a><br>
-instances&nbsp;owned&nbsp;by&nbsp;<a href="#Manager">Manager</a>.<br>
-Their&nbsp;arguments&nbsp;are&nbsp;not&nbsp;shown.</tt></dd></dl>
+<dl><dt><a name="LammpsManager-getUniverse"><strong>getUniverse</strong></a>(self)</dt></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -287,11 +276,14 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Molecule-__init__"><strong>__init__</strong></a>(self, manager, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Molecule-__init__"><strong>__init__</strong></a>(self, manager, ID)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
 Methods inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><a name="Molecule-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Molecule-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Molecule-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
@@ -317,58 +309,17 @@ Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">C
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Region-__init__"><strong>__init__</strong></a>(self, manager, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Region-__init__"><strong>__init__</strong></a>(self, manager, ID)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
 Methods inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><a name="Region-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Region-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Region-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Setting">class <strong>Setting</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>This&nbsp;class&nbsp;has&nbsp;lammps'&nbsp;commands&nbsp;as&nbsp;its&nbsp;properties,&nbsp;and&nbsp;outputs&nbsp;or&nbsp;executes<br>
-the&nbsp;commands.<br>
-You&nbsp;can&nbsp;assign&nbsp;commands&nbsp;in&nbsp;two&nbsp;ways:<br>
-one&nbsp;is&nbsp;to&nbsp;substitute&nbsp;arguments&nbsp;in&nbsp;a&nbsp;property&nbsp;whose&nbsp;name&nbsp;is&nbsp;a&nbsp;command,<br>
-something&nbsp;like&nbsp;"<a href="#Setting">Setting</a>.run&nbsp;=&nbsp;1000"&nbsp;and&nbsp;the&nbsp;other&nbsp;is&nbsp;to&nbsp;pass&nbsp;one&nbsp;or&nbsp;more<br>
-instances&nbsp;of&nbsp;<a href="#Command">Command</a>&nbsp;or&nbsp;its&nbsp;sub-class&nbsp;to&nbsp;<a href="#Setting">Setting</a>.<a href="#Setting-apply">apply</a>().<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Methods defined here:<br>
-<dl><dt><a name="Setting-__init__"><strong>__init__</strong></a>(self, name)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
-
-<dl><dt><a name="Setting-apply"><strong>apply</strong></a>(self, strings, *Commands)</dt><dd><tt>Apply&nbsp;one&nbsp;or&nbsp;more&nbsp;instances&nbsp;of&nbsp;<a href="#Command">Command</a>&nbsp;to&nbsp;the&nbsp;<a href="#Setting">Setting</a>.<br>
-You&nbsp;need&nbsp;to&nbsp;assign&nbsp;one&nbsp;or&nbsp;more&nbsp;strings&nbsp;to&nbsp;the&nbsp;group&nbsp;of&nbsp;the&nbsp;instances<br>
-for&nbsp;identification;&nbsp;the&nbsp;strings&nbsp;can&nbsp;be&nbsp;a&nbsp;sentence&nbsp;including&nbsp;"&nbsp;",&nbsp;"-",<br>
-",",&nbsp;".",&nbsp;"*",&nbsp;"/".<br>
-You&nbsp;can&nbsp;explain&nbsp;how&nbsp;the&nbsp;commands&nbsp;works&nbsp;by&nbsp;using&nbsp;the&nbsp;sentence.<br>
-The&nbsp;sentence&nbsp;will&nbsp;be&nbsp;written&nbsp;when&nbsp;you&nbsp;call&nbsp;<a href="#Manager">Manager</a>.outputAll()&nbsp;in&nbsp;the<br>
-style&nbsp;of&nbsp;markdown.</tt></dd></dl>
-
-<dl><dt><a name="Setting-execute"><strong>execute</strong></a>(self, lmp)</dt><dd><tt>Execute&nbsp;all&nbsp;lammps'&nbsp;commands&nbsp;applied&nbsp;to&nbsp;the&nbsp;<a href="#Setting">Setting</a>&nbsp;using&nbsp;Lammps&nbsp;Python<br>
-Wrapper.<br>
-It&nbsp;is&nbsp;also&nbsp;called&nbsp;from&nbsp;<a href="#Manager">Manager</a>.executeAll().</tt></dd></dl>
-
-<dl><dt><a name="Setting-output"><strong>output</strong></a>(self, Header=False)</dt><dd><tt>Print&nbsp;all&nbsp;lammps'&nbsp;commands&nbsp;applied&nbsp;to&nbsp;the&nbsp;<a href="#Setting">Setting</a>&nbsp;to&nbsp;standard<br>
-output.<br>
-It&nbsp;is&nbsp;also&nbsp;called&nbsp;from&nbsp;<a href="#Manager">Manager</a>.outputAll().</tt></dd></dl>
-
-<dl><dt><a name="Setting-show"><strong>show</strong></a>(self)</dt><dd><tt>Show&nbsp;IDs&nbsp;and&nbsp;commands&nbsp;of&nbsp;all&nbsp;lammps'&nbsp;commands&nbsp;applied&nbsp;to&nbsp;the&nbsp;<a href="#Setting">Setting</a>.<br>
-It&nbsp;is&nbsp;also&nbsp;called&nbsp;from&nbsp;<a href="#Manager">Manager</a>.showAll().</tt></dd></dl>
-
-<hr>
-Data descriptors defined here:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -389,14 +340,14 @@ You&nbsp;can&nbsp;access&nbsp;the&nbsp;instances&nbsp;through&nbsp;dictionaries&
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Universe-__init__"><strong>__init__</strong></a>(self, manager)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
-<dl><dt><a name="Universe-addCmd"><strong>addCmd</strong></a>(self, command, *args, ID=None)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Command">Command</a>,&nbsp;which&nbsp;is&nbsp;not&nbsp;associated&nbsp;with&nbsp;any&nbsp;particular<br>
+<dl><dt><a name="Universe-cmd"><strong>cmd</strong></a>(self, command)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Command">Command</a>,&nbsp;which&nbsp;is&nbsp;not&nbsp;associated&nbsp;with&nbsp;any&nbsp;particular<br>
 group,&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
 
-<dl><dt><a name="Universe-addMol"><strong>addMol</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Molecule">Molecule</a>&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
+<dl><dt><a name="Universe-mol"><strong>mol</strong></a>(self, ID)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Molecule">Molecule</a>&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
 
-<dl><dt><a name="Universe-addReg"><strong>addReg</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Region">Region</a>&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
+<dl><dt><a name="Universe-reg"><strong>reg</strong></a>(self, ID)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Region">Region</a>&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
 
-<dl><dt><a name="Universe-addVar"><strong>addVar</strong></a>(self, ID, *args)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Variable">Variable</a>&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
+<dl><dt><a name="Universe-var"><strong>var</strong></a>(self, ID)</dt><dd><tt>Add&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#Variable">Variable</a>&nbsp;to&nbsp;<a href="#Universe">Universe</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -422,11 +373,14 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Variable-__init__"><strong>__init__</strong></a>(self, manager, ID, *args)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Variable-__init__"><strong>__init__</strong></a>(self, manager, ID)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
 Methods inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>
-<dl><dt><a name="Variable-write"><strong>write</strong></a>(self)</dt></dl>
+<dl><dt><a name="Variable-arg"><strong>arg</strong></a>(self, *args)</dt><dd><tt>Set&nbsp;arguments&nbsp;for&nbsp;the&nbsp;command.</tt></dd></dl>
+
+<dl><dt><a name="Variable-w"><strong>w</strong></a>(self)</dt><dd><tt>Write&nbsp;the&nbsp;command&nbsp;and&nbsp;its&nbsp;arguments&nbsp;in&nbsp;lammps'&nbsp;format&nbsp;on&nbsp;a&nbsp;file.<br>
+The&nbsp;filename&nbsp;is&nbsp;set&nbsp;as&nbsp;an&nbsp;argument&nbsp;of&nbsp;Constructor&nbsp;of&nbsp;<a href="#LammpsManager">LammpsManager</a>.</tt></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="lammps_pythonic_wrapper.html#Command">Command</a>:<br>

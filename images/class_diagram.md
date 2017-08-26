@@ -1,57 +1,60 @@
 ```puml
-class Manager {
-  +Settings
+class LammpsManager {
+  +filename
   +Universe
   +Groups
-  +addSetting()
-  +createGroups()
-  +getValStr()
-  +executeAll()
-  +outputAll()
-  +showAll()
-}
-
-class Setting {
-  +__dict__
-  +apply()
-  +execute()
-  +output()
-  +show()
+  +getGroups(dict)
+  +getUniverse()
 }
 
 class Universe {
-  +addCmd()
-  +addMol()
-  +addReg()
-  +addVar()
+  +cmd("command")
+  +mol("ID")
+  +reg("ID")
+  +var("ID")
 }
 
 class Group {
   +group
-  +addCmd()
-  +addCmpt()
-  +addDump()
-  +addFix()
+  +cmd("command")
+  +cmpt("ID")
+  +dump("ID")
+  +fix("ID")
 }
 
 class Command {
   -command
   -args
-  +ID
-  #write()
+  +arg(*args)
+  +w()
 }
 
 class Fix {
+  +ID
   +unfix
 }
 
-class Compute
+class Compute {
+  +ID
+  +ref
+}
 
-class Dump
+class Dump {
+  +ID
+}
 
-class Region
+class Molecule {
+  +ID
+}
 
-class Variable
+class Region {
+  +ID
+}
+
+class Variable {
+  +ID
+  +ref
+}
 
 Command <|-- Fix
 Command <|-- Compute
@@ -60,22 +63,19 @@ Command <|-- Molecule
 Command <|-- Region
 Command <|-- Variable
 
-Manager o-- Setting
-Manager o-- Universe
-Manager o-- Group
+LammpsManager o-- Universe
+LammpsManager o-- Group
 
-Universe o-- Command
-Universe o-- Molecule
-Universe o-- Region
-Universe o-- Variable
+Universe ..> Command
+Universe ..> Molecule
+Universe ..> Region
+Universe ..> Variable
 
-Group o-- Command
-Group o-- Fix
-Group o-- Compute
-Group o-- Dump
+Group ..> Command
+Group ..> Fix
+Group ..> Compute
+Group ..> Dump
 
 Group o-- "1" Command
 Fix o-- "1" Command
-
-Setting ..> Command : use
 ```
