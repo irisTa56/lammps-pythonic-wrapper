@@ -9,6 +9,12 @@ To use Lammps Python Wrapper in more Python-Like way.
 ## Install
 
 ```
+pip install git+https://github.com/irisTa56/lammps-pythonic-wrapper
+```
+
+Or, from the source directory.
+
+```
 python3 setup.py install
 ```
 
