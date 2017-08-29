@@ -18,7 +18,6 @@ along with lammps-pythonic-wrapper.
 If not, see <http://www.gnu.org/licenses/>.
 """
 
-from lammps import lammps
 import sys
 import time
 
