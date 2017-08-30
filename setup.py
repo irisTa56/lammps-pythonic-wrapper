@@ -26,7 +26,7 @@ setup(
     description="To use Lammps Python Wrapper in more Python-Like way.",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",
-    install_requires=["mpi4py"],
+    install_requires=[],
     url="https://github.com/irisTa56/lammps-pythonic-wrapper.git",
     license="GPL",
     py_modules=['lammps_pythonic_wrapper']
