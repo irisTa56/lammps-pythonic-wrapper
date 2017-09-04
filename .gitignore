@@ -3,5 +3,5 @@ __pycache__/
 build/
 dist/
 lammps_pythonic_wrapper.egg-info/
-ToDo.md
+
 old/
