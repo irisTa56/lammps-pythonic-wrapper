@@ -29,11 +29,11 @@ class LammpsManager:
 
     def __init__(self, filename=None, fileheader="Lammps Simulation"):
         if filename:
-            self.filename = filename
-            with open(self.filename, 'w') as f:
+            self._filename = filename
+            with open(self._filename, 'w') as f:
                 f.write("# {}: {}\n\n".format(fileheader, str(time.ctime())))
-        self.Universe = Universe(self)
-        self.Groups = {"all": Group(self, "all")}
+        self._Universe = Universe(self)
+        self._Groups = {"all": Group(self, "all")}
 
     def getGroups(self, groupDict):
         """
@@ -51,13 +51,13 @@ class LammpsManager:
         """
         for method, groups in groupDict.items():
             for ID, members in groups.items():
-                if ID in self.Groups.keys():
+                if ID in self._Groups.keys():
                     sys.exit("Error: Duplication of Group.")
-                self.Groups[ID] = Group(self, ID, method, members)
-        return self.Groups.values()
+                self._Groups[ID] = Group(self, ID, method, members)
+        return self._Groups.values()
 
     def getUniverse(self):
-        return self.Universe
+        return self._Universe
 
 
 class Universe:
@@ -68,32 +68,32 @@ class Universe:
     """
 
     def __init__(self, manager):
-        self.manager = manager
+        self._manager = manager
 
     def cmd(self, command):
         """
         Add an instance of Command, which is not associated with any particular
         group, to Universe.
         """
-        return Command(self.manager, command)
+        return Command(self._manager, command)
 
     def mol(self, ID):
         """
         Add an instance of Molecule to Universe.
         """
-        return Molecule(self.manager, ID).arg(ID)
+        return Molecule(self._manager, ID).arg(ID)
 
     def reg(self, ID):
         """
         Add an instance of Region to Universe.
         """
-        return Region(self.manager, ID).arg(ID)
+        return Region(self._manager, ID).arg(ID)
 
     def var(self, ID):
         """
         Add an instance of Variable to Universe.
         """
-        return Variable(self.manager, ID).arg(ID)
+        return Variable(self._manager, ID).arg(ID)
 
 
 class Group:
@@ -110,46 +110,54 @@ class Group:
     """
 
     def __init__(self, manager, ID, method=None, members=None):
-        self.manager = manager
-        self.ID = ID
+        self._manager = manager
+        self._ID = ID
         if method and members:
-             self.group = self.cmd("group").arg("{} {}".format(
+             self._group = self.cmd("group").arg("{} {}".format(
                 method, " ".join(map(str, members))
                 if hasattr(members, '__iter__') and not isinstance(members, str)
                 else str(members)
             ))
         elif method and not members:
-            self.group = self.cmd("group").arg("type 0")
+            self._group = self.cmd("group").arg("type 0")
         else:
-            self.group = None
+            self._group = None
+
+    @property
+    def ID(self):
+        return self._ID
+
+    @property
+    def group(self):
+        return self._group
 
     def cmd(self, command):
         """
         Add an instance of Command, which is associated with a particular
         group, to Group.
         """
-        return Command(self.manager, command).arg(self.ID)
+        return Command(self._manager, command).arg(self._ID)
 
     def cmpt(self, ID):
         """
         Add an instance of Compute to Group.
         """
-        fullID = "{}_{}".format(ID, self.ID)
-        return Compute(self.manager, fullID).arg(fullID, self.ID)
+        fullID = "{}_{}".format(ID, self._ID)
+        return Compute(self._manager, fullID).arg(fullID, self._ID)
 
     def dump(self, ID, *args):
         """
         Add an instance of Dump to Group.
         """
-        fullID = "{}_{}".format(ID, self.ID)
-        return Dump(self.manager, fullID).arg(fullID, self.ID)
+        fullID = "{}_{}".format(ID, self._ID)
+        return Dump(self._manager, fullID).arg(fullID, self._ID)
 
     def fix(self, ID, *args):
         """
         Add an instance of Fix to Group.
         """
-        fullID = "{}_{}".format(ID, self.ID)
-        return Fix(self.manager, fullID).arg(fullID, self.ID)
+        fullID = "{}_{}".format(ID, self._ID)
+        return Fix(self._manager, fullID).arg(fullID, self._ID)
 
 
 class Command:
@@ -159,15 +167,15 @@ class Command:
     """
 
     def __init__(self, manager, command):
-        self.manager = manager
-        self.command = command
-        self.args = []
+        self._manager = manager
+        self._command = command
+        self._args = []
 
     def arg(self, *args):
         """
         Set arguments for the command.
         """
-        self.args += args
+        self._args += args
         return self
 
     def w(self):
@@ -176,9 +184,9 @@ class Command:
         The filename is set as an argument of Constructor of LammpsManager.
         """
         try:
-            with open(self.manager.filename, 'a') as f:
+            with open(self._manager._filename, 'a') as f:
                 f.write("{:15s} {}\n".format(
-                    self.command, " ".join(map(str, self.args))
+                    self._command, " ".join(map(str, self._args))
                 ))
             return self
         except:
@@ -191,9 +199,17 @@ class Fix(Command):
     """
 
     def __init__(self, manager, ID):
-        self.ID = ID
+        self._ID = ID
         super().__init__(manager, "fix")
-        self.unfix = self.manager.Universe.cmd("unfix").arg(self.ID)
+        self._unfix = self._manager._Universe.cmd("unfix").arg(self._ID)
+
+    @property
+    def ID(self):
+        return self._ID
+
+    @property
+    def unfix(self):
+        return self._unfix
 
 
 class Compute(Command):
@@ -202,9 +218,17 @@ class Compute(Command):
     """
 
     def __init__(self, manager, ID):
-        self.ID = ID
-        self.ref = "c_" + ID
+        self._ID = ID
+        self._ref = "c_" + ID
         super().__init__(manager, "compute")
+
+    @property
+    def ID(self):
+        return self._ID
+
+    @property
+    def ref(self):
+        return self._ref
 
 
 class Dump(Command):
@@ -213,8 +237,12 @@ class Dump(Command):
     """
 
     def __init__(self, manager, ID):
-        self.ID = ID
+        self._ID = ID
         super().__init__(manager, "dump")
+
+    @property
+    def ID(self):
+        return self._ID
 
 
 class Molecule(Command):
@@ -223,8 +251,12 @@ class Molecule(Command):
     """
 
     def __init__(self, manager, ID):
-        self.ID = ID
+        self._ID = ID
         super().__init__(manager, "molecule")
+
+    @property
+    def ID(self):
+        return self._ID
 
 
 class Region(Command):
@@ -233,8 +265,12 @@ class Region(Command):
     """
 
     def __init__(self, manager, ID):
-        self.ID = ID
+        self._ID = ID
         super().__init__(manager, "region")
+
+    @property
+    def ID(self):
+        return self._ID
 
 
 class Variable(Command):
@@ -243,6 +279,14 @@ class Variable(Command):
     """
 
     def __init__(self, manager, ID):
-        self.ID = ID
-        self.ref = "v_" + ID
+        self._ID = ID
+        self._ref = "v_" + ID
         super().__init__(manager, "variable")
+
+    @property
+    def ID(self):
+        return self._ID
+
+    @property
+    def ref(self):
+        return self._ref
