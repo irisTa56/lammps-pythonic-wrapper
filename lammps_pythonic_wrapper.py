@@ -194,7 +194,7 @@ class Command:
                     self._command, " ".join(map(str, self._args))
                 ))
             return self
-        except IOError::
+        except IOError:
             sys.exit("Error: Please set filename by LammpsManager.setFilename().")
 
 
