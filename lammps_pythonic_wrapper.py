@@ -37,7 +37,7 @@ class LammpsManager:
         self._Universe = Universe(self)
         self._Groups = {"all": Group(self, "all")}
 
-    def getGroups(self, groupDict):
+    def createGroups(self, groupDict):
         """
         Creates instances of Group class and returns the instances.
         The instances are defined by a dectipnary like the following.
@@ -56,6 +56,8 @@ class LammpsManager:
                 if ID in self._Groups.keys():
                     sys.exit("Error: Duplication of Group.")
                 self._Groups[ID] = Group(self, ID, method, members)
+
+    def getGroups(self):
         return self._Groups.values()
 
     def getUniverse(self):
