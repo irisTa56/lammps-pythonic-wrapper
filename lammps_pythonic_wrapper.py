@@ -32,6 +32,8 @@ class LammpsManager:
             self._filename = filename
             with open(self._filename, 'w') as f:
                 f.write("# {}: {}\n\n".format(fileheader, str(time.ctime())))
+        else:
+            self._filename = None
         self._Universe = Universe(self)
         self._Groups = {"all": Group(self, "all")}
 
@@ -58,6 +60,9 @@ class LammpsManager:
 
     def getUniverse(self):
         return self._Universe
+
+    def setFilename(self, filename):
+        self._filename = filename
 
 
 class Universe:
@@ -189,8 +194,8 @@ class Command:
                     self._command, " ".join(map(str, self._args))
                 ))
             return self
-        except:
-            print("Error: Please set filename in creating LammpsManager instance.")
+        except IOError::
+            sys.exit("Error: Please set filename by LammpsManager.setFilename().")
 
 
 class Fix(Command):

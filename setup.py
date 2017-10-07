@@ -22,7 +22,7 @@ from setuptools import setup
 
 setup(
     name="lammps-pythonic-wrapper",
-    version="0.0.2",
+    version="0.0.3",
     description="To use Lammps Python Wrapper in more Python-Like way.",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",
