@@ -18,16 +18,19 @@ along with lammps-pythonic-wrapper.
 If not, see <http://www.gnu.org/licenses/>.
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="lammps-pythonic-wrapper",
-    version="0.0.3",
+    version="0.0.4",
     description="To use Lammps Python Wrapper in more Python-Like way.",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",
-    install_requires=[],
+    install_requires=["mpi4py>=2.0.0"],
     url="https://github.com/irisTa56/lammps-pythonic-wrapper.git",
     license="GPL",
+    packages=find_packages(),
     py_modules=['lammps_pythonic_wrapper']
 )
+
+print("Make sure a path to the directory containing Lammps' shared library is in your LD_LIBRARY_PATH.")
