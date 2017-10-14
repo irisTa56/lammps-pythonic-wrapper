@@ -36,3 +36,4 @@ This project would not be possible without many fine open-source projects.
 ## To Do
 
 * Simple example
+* *_modify as a method

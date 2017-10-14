@@ -231,7 +231,7 @@ class Command:
 
   def w(self):
     """
-    Write the command and its arguments in lammps' format on a file.
+    Write the command and its arguments in lammps' format.
     """
     try:
       with open(self._manager._filename, 'a') as f:
@@ -277,6 +277,9 @@ class Fix(Command):
     super().__init__(manager, "fix")
     self._unfix = self._manager._Universe.cmd("unfix").arg(self._ID)
 
+  def modify(self, *args):
+    return self._manager._Universe.cmd("fix_modify").arg(self._ID, *args)
+
   @property
   def ID(self):
     return self._ID
@@ -296,6 +299,9 @@ class Compute(Command):
     self._ref = "c_" + ID
     super().__init__(manager, "compute")
 
+  def modify(self, *args):
+    return self._manager._Universe.cmd("compute_modify").arg(self._ID, *args)
+
   @property
   def ID(self):
     return self._ID
@@ -313,6 +319,9 @@ class Dump(Command):
   def __init__(self, manager, ID):
     self._ID = ID
     super().__init__(manager, "dump")
+
+  def modify(self, *args):
+    return self._manager._Universe.cmd("dump_modify").arg(self._ID, *args)
 
   @property
   def ID(self):

@@ -12,8 +12,8 @@ num_molecules = 72
 temperature_start = 300
 temperature_stop = 300
 step_per_kelvin = 1000
-normal_force = -0.0455 # 50 MPa
-num_steps = 1000 #20000000
+normal_force = -0.0455
+num_steps = 1000
 
 # Create Manager
 
@@ -67,10 +67,7 @@ for g in [lBath, uBath]:
             seed=random_seed
         )
     )
-    init_set.extend([
-        g.temp, g.heat,
-        u.cmd("fix_modify").arg("{f} temp {c}".format(f=g.heat.ID, c=g.temp.ID))
-    ])
+    init_set.extend([g.temp, g.heat, g.heat.modify("temp", g.temp.ID)])
 
 stay_set = []
 for g in [lBath, uBath]:
@@ -81,10 +78,7 @@ for g in [lBath, uBath]:
             seed=random_seed
         )
     )
-    stay_set.extend([
-        g.heat.unfix, tmpF,
-        u.cmd("fix_modify").arg("{f} temp {c}".format(f=tmpF.ID, c=g.temp.ID))
-    ])
+    stay_set.extend([g.heat.unfix, tmpF, tmpF.modify("temp", g.temp.ID)])
 
 # Process
 
@@ -142,13 +136,14 @@ u.cmd("thermo_style").arg("multi").e()
 for g, interval in zip([all, liq], [10000, 1000]):
     directory = "dumps_{}".format(g.ID)
     u.cmd("shell").arg("mkdir", directory).e()
-    g.dump("myDump").arg(
+    tmpD = g.dump("myDump").arg(
         "custom {inr} {dir}/atom.*.dump {args}".format(
             inr=interval,
             dir=directory,
             args="id type xu yu zu vx vy vz"
         )
     ).e()
+    tmpD.modify("sort id").e()
 
 atomK = all.cmpt("atomK").arg("ke/atom").e()
 atomT = u.var("atomT").arg("atom {val}*335.514175".format(val=atomK.ref)).e()
