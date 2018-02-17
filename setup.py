@@ -18,7 +18,19 @@ along with lammps-pythonic-wrapper.
 If not, see <http://www.gnu.org/licenses/>.
 """
 
+import sys
 from setuptools import setup, find_packages
+
+# Confirm that Python can reach lammps.py
+try:
+  from lammps import lammps, PyLammps
+except ImportError:
+  print("It seems you do not have 'lammps' module.")
+  print("You may need to build Lammps by CMake with a flag '-DBUILD_SHARED_LIBS=ON',")
+  print("and set a path to the library directory.")
+  sys.exit(1)
+else:
+  print("You have 'lammps' module.")
 
 setup(
     name="lammps-pythonic-wrapper",
@@ -33,4 +45,4 @@ setup(
     py_modules=['lammps_pythonic_wrapper']
 )
 
-print("Make sure a path to the directory containing Lammps' shared library is in your LD_LIBRARY_PATH.")
+#print("Make sure a path to Lammps' shared library is in your LD_LIBRARY_PATH.")

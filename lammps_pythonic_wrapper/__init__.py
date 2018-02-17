@@ -24,7 +24,7 @@ import time
 
 from mpi4py import MPI
 
-from .lammps import lammps, PyLammps
+from lammps import lammps, PyLammps
 
 class LammpsManager:
   """
@@ -32,7 +32,8 @@ class LammpsManager:
   You can specify a filename which lammps' commands will be written on.
   """
 
-  def __init__(self, filename=None, fileheader=None, lammps_interface=None, cmdargs=None):
+  def __init__(self, lammps_module="lammps", name="", cmdargs=None,
+               filename=None, fileheader=None):
     self._comm = MPI.COMM_WORLD
     # Lammps' input file
     if filename:
@@ -42,10 +43,10 @@ class LammpsManager:
     else:
       self._filename = None
     # Interface to Lammps
-    if lammps_interface == "lammps":
-      self._Lammps = lammps(cmdargs=cmdargs)
-    elif lammps_interface == "PyLammps":
-      self._Lammps = PyLammps(cmdargs=cmdargs)
+    if lammps_module == "lammps":
+      self._Lammps = lammps(name=name, cmdargs=cmdargs)
+    elif lammps_module == "PyLammps":
+      self._Lammps = PyLammps(name=name, cmdargs=cmdargs)
     else:
       self._Lammps = None
     #
@@ -100,13 +101,13 @@ class LammpsManager:
     with open(self._filename, 'w') as f:
       f.write("# {}: {}\n\n".format(fileheader, str(time.ctime())))
 
-  def setLammps(self, lammps_interface="lammps", cmdargs=None, delete_previous=True):
+  def setLammps(self, lammps_module="lammps", cmdargs=None, delete_previous=True):
     if delete_previous and self._Lammps:
       del self._Lammps
-    if lammps_interface == "lammps":
-      self._Lammps = lammps(cmdargs=cmdargs)
-    elif lammps_interface == "PyLammps":
-      self._Lammps = PyLammps(cmdargs=cmdargs)
+    if lammps_module == "lammps":
+      self._Lammps = lammps(name=name, cmdargs=cmdargs)
+    elif lammps_module == "PyLammps":
+      self._Lammps = PyLammps(name=name, cmdargs=cmdargs)
     else:
       sys.exit("There is no such an interface to lammps.")
 
