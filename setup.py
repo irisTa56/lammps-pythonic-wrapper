@@ -34,7 +34,7 @@ else:
 
 setup(
     name="lammps-pythonic-wrapper",
-    version="0.0.5",
+    version="0.0.6",
     description="To use Lammps Python Wrapper in more Python-Like way.",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",
