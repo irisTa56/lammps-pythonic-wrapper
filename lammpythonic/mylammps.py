@@ -4,7 +4,7 @@ This is *M*odified P*yLammps*, a module inheriting PyLammps class.
 create: 2018/06/07 by Takayuki Kobayashi
 """
 
-from lammps import OutputCapture, PyLammps
+from lammps import OutputCapture, PyLammps, get_thermo_data
 
 class MyLammps(PyLammps):
 
@@ -33,18 +33,19 @@ class MyLammps(PyLammps):
 
   def command(self,cmd):
 
-    if self.dry_run:
-      self._cmd_history.append(cmd)
+    if not self.dry_run:
+      self.lmp.command(cmd)
+
+    self._cmd_history.append(cmd)
+
+  def run(self, *args, **kwargs):
+
+    if self.pipe_off:
+      self.__getattr__('run')(*args, **kwargs)
+      return None
     else:
-
-      if cmd.startswith("run") and self.run_zero:
-        cmd_dummy = " ".join(
-          ["0" if i == 1 else s for i, s in enumerate(cmd.split())])
-        self.lmp.command(cmd_dummy)
-      else:
-        self.lmp.command(cmd)
-
-      self._cmd_history.append(cmd)
+      new_args = (0,) + args[1:] if self.run_zero else args
+      return super().run(*new_args, **kwargs)
 
   def __getattr__(self, name):
 
@@ -54,6 +55,7 @@ class MyLammps(PyLammps):
 
       if self.pipe_off:
         self.command(' '.join(cmd_args))
+
       else:
 
         with OutputCapture() as capture:
