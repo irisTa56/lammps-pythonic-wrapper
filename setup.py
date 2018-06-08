@@ -8,8 +8,6 @@ except ImportError:
   print("You may need to build Lammps by CMake with a flag '-DBUILD_SHARED_LIBS=ON',")
   print("and set a path to the library directory.")
   sys.exit(1)
-else:
-  print("You have 'lammps' module.")
 
 with open("README.md", "r") as fh:
     long_description = fh.read()

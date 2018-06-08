@@ -5,35 +5,29 @@ To use Lammps Python Wrapper in more Python-Like way.
 ## Install
 
 ```
-pip install git+https://github.com/irisTa56/lammps-pythonic-wrapper
+pip install git+https://github.com/irisTa56/lammpythonic
 ```
 
 or
 
 ```
-git clone https://github.com/irisTa56/lammps-pythonic-wrapper
-cd lammps-pythonic-wrapper
+git clone https://github.com/irisTa56/lammpythonic
+cd lammpythonic
 python setup.py install
 ```
 
-Please make sure a path to the directory containing Lammps' shared library is in your LD_LIBRARY_PATH. For details, please see [this section in lammps' manual](http://lammps.sandia.gov/doc/Section_python.html#installing-the-python-wrapper-into-python).
-
 ## Usage
 
-```
-python script.py
-```
+This package provides `MyLammps` class which inherits from `PyLammps` class.
+`MyLammps` is different from `PyLammps` in the following three points.
 
-Please see "tests-and-examples" directory for example(s) of "script.py".
+* `MyLammps` can turn off `OutputCapture` capability (this might kill MPI process); by setting `mode='nopipe'` as an argument of initializer (default).
+* `MyLammps` can test a simulation procedure with setting number of timesteps to 0; by setting `mode='runzero'` as an argument of initializer.
+* `MyLammps` can conduct dry run in which commands will not be executed but added to the history; by setting `mode='dryrun'` as an argument of initializer.
 
 ## Acknowledgement
 
-This project would not be possible without many fine open-source projects.
+This project would not be possible without the following fine open-source projects.
 
-* [mpi4py](https://github.com/mpi4py/mpi4py)
 * [lammps](https://github.com/lammps/lammps)
-
-## To Do
-
-* Simple example
-* *_modify as a method
+* [mpi4py](https://github.com/mpi4py/mpi4py)
