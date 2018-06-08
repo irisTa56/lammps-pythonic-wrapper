@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 st.setup(
     name="lammpythonic",
-    version="0.1a.0",
+    version="0.1a.1",
     description="Extension of Atomic Simulation Environment for LAMMPS",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",
