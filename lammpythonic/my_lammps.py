@@ -46,11 +46,6 @@ class MyLammps(PyLammps):
       new_args = (0,) + args[1:] if self.run_zero else args
       return super().run(*new_args, **kwargs)
 
-  def write_data(self, *args, **kwargs):
-
-    if self.lmp.MPI.COMM_WORLD.rank == 0:
-      self.__getattr__('write_data')(*args, **kwargs)
-
   def __getattr__(self, name):
 
     def handler(*args, **kwargs):
