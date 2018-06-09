@@ -25,7 +25,7 @@ class MyLammps(PyLammps):
       self.run_zero = True
       self.dry_run = False
     elif mode == 'dryrun':
-      self.pipe_off = False
+      self.pipe_off = True
       self.run_zero = False
       self.dry_run = True
     else:
