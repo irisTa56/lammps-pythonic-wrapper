@@ -5,14 +5,14 @@ To use Lammps Python Wrapper in more Python-Like way.
 ## Install
 
 ```
-pip install git+https://github.com/irisTa56/lammpythonic
+pip install git+https://github.com/irisTa56/wapylmp
 ```
 
 or
 
 ```
-git clone https://github.com/irisTa56/lammpythonic
-cd lammpythonic
+git clone https://github.com/irisTa56/wapylmp
+cd wapylmp
 python setup.py install
 ```
 

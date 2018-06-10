@@ -13,14 +13,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 st.setup(
-    name="lammpythonic",
+    name="wapylmp",
     version="0.1.1a",
     description="Extension of Atomic Simulation Environment for LAMMPS",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/irisTa56/lammpythonic.git",
+    url="https://github.com/irisTa56/wapylmp.git",
     packages=st.find_packages(),
     classifiers=(
         "Programming Language :: Python :: 3",
