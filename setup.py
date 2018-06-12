@@ -25,7 +25,6 @@ st.setup(
     classifiers=(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License (GPL)",
-        "Operating System :: OS Independent",
     ),
     install_requires=["mpi4py>=2.0.0"],
 )
