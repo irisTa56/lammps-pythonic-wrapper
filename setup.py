@@ -26,5 +26,4 @@ st.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License (GPL)",
     ),
-    install_requires=["mpi4py>=2.0.0"],
 )
