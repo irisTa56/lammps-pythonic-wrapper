@@ -13,23 +13,30 @@ class MyLammps(PyLammps):
     """
     This constructor ...
     [Additional Arguments]
-    * mode: <str>; 'nopipe', 'runzero', 'dryrun' (default 'nopipe')
+    * mode: 'nopipe', 'runzero', 'runone', 'dryrun' (default 'nopipe')
     """
+
     super().__init__(name, cmdargs, ptr, comm)
+
     if mode == "nopipe":
-      self.pipe_off = True
       self.run_zero = False
+      self.run_one = False
       self.dry_run = False
     elif mode == 'runzero':
-      self.pipe_off = False
       self.run_zero = True
+      self.run_one = False
+      self.dry_run = False
+    elif mode == 'runzero':
+      self.run_zero = False
+      self.run_one = True
       self.dry_run = False
     elif mode == 'dryrun':
-      self.pipe_off = True
       self.run_zero = False
+      self.run_one = False
       self.dry_run = True
     else:
-      RuntimeError("Please set 'nopipe', 'runzero', 'dryrun' as 'mode")
+      RuntimeError("Please set 'nopipe', 'runzero', 'runone' or "
+        + "'dryrun' as 'mode'")
 
   def command(self,cmd):
 
@@ -40,11 +47,12 @@ class MyLammps(PyLammps):
 
   def run(self, *args, **kwargs):
 
-    if self.pipe_off:
-      return self.__getattr__('run')(*args, **kwargs)
+    if self.run_zero:
+      return self.__getattr__('run')(0, *args[1:], **kwargs)
+    elif self.run_one:
+      return self.__getattr__('run')(1, *args[1:], **kwargs)
     else:
-      new_args = (0,) + args[1:] if self.run_zero else args
-      return super().run(*new_args, **kwargs)
+      return self.__getattr__('run')(*args, **kwargs)
 
   def __getattr__(self, name):
 
@@ -52,25 +60,6 @@ class MyLammps(PyLammps):
 
       cmd_args = [name] + [str(x) for x in args]
 
-      if self.pipe_off:
-        self.command(' '.join(cmd_args))
-
-      else:
-
-        with OutputCapture() as capture:
-          self.command(' '.join(cmd_args))
-          output = capture.output
-
-        if 'verbose' in kwargs and kwargs['verbose']:
-          print(output)
-
-        lines = output.splitlines()
-
-        if len(lines) > 1:
-          return lines
-        elif len(lines) == 1:
-          return lines[0]
-
-        return None
+      self.command(' '.join(cmd_args))
 
     return handler
