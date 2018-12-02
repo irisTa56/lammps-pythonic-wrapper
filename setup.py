@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 st.setup(
     name="wapylmp",
-    version="0.2.1a",
+    version="0.3.0a",
     description="Extension of Atomic Simulation Environment for LAMMPS",
     author="Takayuki Kobayashi",
     author_email="iris.takayuki@gmail.com",

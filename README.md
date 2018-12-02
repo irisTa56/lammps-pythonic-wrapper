@@ -25,6 +25,8 @@ This package provides `MyLammps` class which inherits from `PyLammps` class.
 * `MyLammps` can test a simulation procedure with setting number of timesteps to 0; by setting `mode='runzero'` as an argument of initializer.
 * `MyLammps` can conduct dry run in which commands will not be executed but added to the history; by setting `mode='dryrun'` as an argument of initializer.
 
+This package also contains a collection of functions to write your Lammps's script more conveniently.
+
 ## Acknowledgement
 
 This project would not be possible without the following fine open-source projects.

@@ -1,12 +1,10 @@
-"""
-This is *M*odified P*yLammps*, a module inheriting PyLammps class.
-
-create: 2018/06/07 by Takayuki Kobayashi
-"""
 
 from lammps import OutputCapture, PyLammps, get_thermo_data
 
 class MyLammps(PyLammps):
+  """
+  This class inherits from PyLammps class.
+  """
 
   def __init__(
     self, name="", cmdargs=None, ptr=None, comm=None, mode="nopipe"):
