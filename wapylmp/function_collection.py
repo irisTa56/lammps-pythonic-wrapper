@@ -50,4 +50,7 @@ def compute_kinetic_variance_ratio(
     LMP.variable("Kave2_mol", "equal", "v_Kave_mol*v_Kave_mol")
     LMP.variable(name_mol, "equal", "v_K2ave_mol/v_Kave2_mol")
 
-  return (name_atom, name_mol) if 0 < num_molecules else name_atom
+  if 0 < num_molecules:
+    return ("v_{}".format(name_atom), "v_{}".format(name_mol))
+  else:
+    return "v_{}".format(name_atom)
