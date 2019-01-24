@@ -1,20 +1,24 @@
 def get_table_name(path):
-
   with open(path, "r") as f:
     return (f.readlines()[2].strip())
 
 def get_table_length(path):
-
   with open(path, "r") as f:
     return int(f.readlines()[3].split()[1])
 
 def compute_kinetic_variance_ratio(
-  LMP,
-  group="all",
-  num_molecules=0,
-  name_atom="_ratio_atom",
-  name_mol="_ratio_mol",
-):
+  LMP, group="all", num_molecules=0,
+  name_atom="_ratio_atom", name_mol="_ratio_mol"):
+  """
+  Compute <K^2>/<K>^2 of atoms and molecules, where K is kinetic energy
+  and <*> stands for ensemble average. For equilibrium gas, this value
+  approaches 5/3.
+
+  @return
+    Name(s) of variable (in format of 'v_*') where computed value is
+    assigned to. If `num_molecules == 0` holds, only the name for atoms
+    will be returned.
+  """
 
   LMP.compute("K_atom", group, "ke/atom")
   LMP.compute("K2ave_atom", group, "reduce", "avesq", "c_K_atom")
@@ -33,12 +37,10 @@ def compute_kinetic_variance_ratio(
     for i in range(num_molecules):
 
       LMP.variable(
-        "K_{}_mol".format(i+1),
-        "equal",
+        "K_{}_mol".format(i+1), "equal",
         "v_K_{}_mol+c_K_mol[{}][1]".format(i, i+1))
       LMP.variable(
-        "K2_{}_mol".format(i+1),
-        "equal",
+        "K2_{}_mol".format(i+1), "equal",
         "v_K2_{0}_mol+c_K_mol[{1}][1]*c_K_mol[{1}][1]".format(i, i+1))
 
     LMP.variable(

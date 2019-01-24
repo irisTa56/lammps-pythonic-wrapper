@@ -1,6 +1,6 @@
 ## Overview
 
-To use Lammps Python Wrapper in more Python-Like way.
+My (**Wa**tashi no, in Japanese) little wrapper of **PyLammps**, and collection of utility functions for it.
 
 ## Install
 
@@ -15,17 +15,6 @@ git clone https://github.com/irisTa56/wapylmp
 cd wapylmp
 python setup.py install
 ```
-
-## Usage
-
-This package provides `MyLammps` class which inherits from `PyLammps` class.
-`MyLammps` is different from `PyLammps` in the following three points.
-
-* `MyLammps` can turn off `OutputCapture` capability (this might kill MPI process); by setting `mode='nopipe'` as an argument of initializer (default).
-* `MyLammps` can test a simulation procedure with setting number of timesteps to 0; by setting `mode='runzero'` as an argument of initializer.
-* `MyLammps` can conduct dry run in which commands will not be executed but added to the history; by setting `mode='dryrun'` as an argument of initializer.
-
-This package also contains a collection of functions to write your Lammps's script more conveniently.
 
 ## Acknowledgement
 
