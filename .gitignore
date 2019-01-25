@@ -9,4 +9,4 @@ profile.*
 dumps/
 
 # allow any
-!examples/*/data_files/
+!examples/*/data_files/*
