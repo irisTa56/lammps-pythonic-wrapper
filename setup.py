@@ -21,7 +21,6 @@ st.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/irisTa56/wapylmp.git",
-    install_requires=["mpi4py"],
     dependency_links=['git+https://github.com/mpi4py/mpi4py.git#egg=mpi4py'],
     packages=st.find_packages(),
     classifiers=(
