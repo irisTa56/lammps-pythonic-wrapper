@@ -1,6 +1,5 @@
 # This script runs a bulk simulation
 
-#from lammps import PyLammps
 from wapylmp import (
   MyLammps,
   get_table_length, get_table_name, compute_kinetic_variance_ratio)
@@ -17,7 +16,7 @@ num_molecules = 125
 
 dump_name = "bead.*.dump"
 dump_dir = "dumps"
-dump_interval_time = 100000  # [fs]
+dump_interval_time = 10000  # [fs]
 
 potential_bond = {  # type => filepath
   1: "./potential_files/bond_length.table"
@@ -46,8 +45,8 @@ respa_scale = 4
 
 temperature = 300  # [K]
 
-total_time = 100000  # [fs]
-write_data_every_this_time = 100000 # [fs]
+total_time = 10000  # [fs]
+write_data_every_this_time = 10000  # [fs]
 
 num_steps_dump_interval = int(dump_interval_time/time_step)
 
@@ -79,16 +78,14 @@ L.timestep(time_step)
 # Potentials #
 #------------#
 
-L.bond_style("table", "linear", max([
-  get_table_length(v) for v in potential_bond.values()
-]))
+L.bond_style("table", "linear", max(
+  get_table_length(v) for v in potential_bond.values()))
 
 for k, v in potential_bond.items():
   L.bond_coeff(k, v, get_table_name(v))
 
-L.angle_style("table", "linear", max([
-  get_table_length(v) for v in potential_angle.values()
-]))
+L.angle_style("table", "linear", max(
+  get_table_length(v) for v in potential_angle.values()))
 
 for k, v in potential_angle.items():
   L.angle_coeff(k, v, get_table_name(v))
@@ -97,9 +94,8 @@ respa_temp = respa_scale*temperature
 
 L.pair_style(
   "hybrid/overlay/tally",
-  "table", "linear", max([
-    get_table_length(v[0]) for v in potential_nonbond.values()
-  ]),
+  "table", "linear", max(  # use the maximum cutoff as a global cutoff
+    get_table_length(v[0]) for v in potential_nonbond.values()),
   "dpd/trans/tstat", respa_temp, respa_temp, dpd_cutoff, random_seed)
 
 L.pair_modify("pair", "table", "special", "lj", 0.0, 0.0, 1.0)
@@ -137,13 +133,20 @@ ratio_atom, ratio_mol = compute_kinetic_variance_ratio(
   LMP=L, group="all", num_molecules=num_molecules)
 
 L.fix(
-  "monitor", "all", "ave/time", 100, 100, 10000,
-  "c_thermo_temp", "c_thermo_pe",
-  ratio_atom, ratio_mol, "file", "profile.monitor")
+  "monitor", "all", "ave/time", 100, 10, 1000,
+  "c_thermo_temp", ratio_atom, ratio_mol, "file", "profile.monitor")
+
+# compute/tally
+
+L.compute("pe_pair", "all", "pe", "pair")
+
+L.compute("pe_table", "all", "pe/tally", "all")
+L.compute("sum_pe_table", "all", "reduce", "sum", "c_pe_table[*]")
+L.pair_modify("pair", "table", "compute/tally", "pe_table")
 
 L.fix(
-  "pressure", "all", "ave/time", 1, 10000, 10000,
-  "c_thermo_press", "file", "profile.pressure")
+  "tally1", "all", "ave/time", 100, 10, 1000,
+  "c_pe_pair", "c_sum_pe_table[1]", "file", "profile.tally.potential")
 
 #-----#
 # Run #
