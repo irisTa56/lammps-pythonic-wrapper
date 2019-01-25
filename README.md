@@ -5,7 +5,7 @@ My (**Wa**tashi no, in Japanese) little wrapper of **PyLammps**, and collection 
 ## Install
 
 ```
-pip install git+https://github.com/irisTa56/wapylmp
+pip install -v git+https://github.com/irisTa56/wapylmp
 ```
 
 or
