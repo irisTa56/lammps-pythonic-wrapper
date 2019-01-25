@@ -1,6 +1,5 @@
 # This script runs a bulk simulation
 
-from mpi4py import MPI
 #from lammps import PyLammps
 from wapylmp import (
   MyLammps,
@@ -97,7 +96,7 @@ for k, v in potential_angle.items():
 respa_temp = respa_scale*temperature
 
 L.pair_style(
-  "hybrid/overlay",
+  "hybrid/overlay/tally",
   "table", "linear", max([
     get_table_length(v[0]) for v in potential_nonbond.values()
   ]),
@@ -123,7 +122,7 @@ L.fix(1, "all", "nve")
 # Monitor Settings #
 #------------------#
 
-if MPI.COMM_WORLD.rank == 0 and not os.path.isdir(dump_dir):
+if L.lmp.comm.rank == 0 and not os.path.isdir(dump_dir):
   os.mkdir(dump_dir)
 
 L.dump(
