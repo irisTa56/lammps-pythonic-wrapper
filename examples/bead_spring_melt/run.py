@@ -118,8 +118,8 @@ L.fix(1, "all", "nve")
 # Monitor Settings #
 #------------------#
 
-if L.lmp.comm.rank == 0 and not os.path.isdir(dump_dir):
-  os.mkdir(dump_dir)
+if L.lmp.comm.rank == 0:
+  os.makedirs(dump_dir, exist_ok=True)
 
 L.dump(
   1, "all", "custom", num_steps_dump_interval,

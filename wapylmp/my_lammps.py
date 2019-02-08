@@ -14,7 +14,7 @@ class MyLammps(PyLammps):
     """
     message = "\n{}\n".format("\n".join([
       "MESSAGE FROM MYLAMMPS:",
-      "  You will not see progress of the simulation in screen",
+      "  You might not see progress of the simulation in screen",
       "  because Python captures standard output. To see the progress",
       "  in real time, set 'flush' keyword of 'thermo_modify' command to 'yes'.",
       "  This invokes a flush operation after thermodynamic info is written to the log file."]))
