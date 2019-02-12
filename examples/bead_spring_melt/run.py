@@ -45,8 +45,8 @@ respa_scale = 4
 
 temperature = 300  # [K]
 
-total_time = 10000  # [fs]
-write_data_every_this_time = 10000  # [fs]
+total_time = 50000  # [fs]
+write_data_every_this_time = total_time  # [fs]
 
 num_steps_dump_interval = int(dump_interval_time/time_step)
 
@@ -127,7 +127,6 @@ L.dump(
 
 L.thermo(1000)
 L.thermo_style("one")
-L.thermo_modify("flush", "yes")
 
 ratio_atom, ratio_mol = compute_kinetic_variance_ratio(
   LMP=L, group="all", num_molecules=num_molecules)
