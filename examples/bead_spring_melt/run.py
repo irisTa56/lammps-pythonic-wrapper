@@ -137,15 +137,29 @@ L.fix(
 
 # compute/tally
 
-L.compute("pe_pair", "all", "pe", "pair")
+L.pair_modify("pair", "table", "compute/tally", "pe_table")
 
+L.compute("pe_pair", "all", "pe", "pair")
 L.compute("pe_table", "all", "pe/tally", "all")
 L.compute("sum_pe_table", "all", "reduce", "sum", "c_pe_table[*]")
-L.pair_modify("pair", "table", "compute/tally", "pe_table")
 
 L.fix(
   "tally1", "all", "ave/time", 100, 10, 1000,
   "c_pe_pair", "c_sum_pe_table[1]", "file", "profile.tally.potential")
+
+L.pair_modify("pair", "dpd/trans/tstat", "compute/tally", "force")
+
+L.compute("force", "all", "force/tally", "all")
+L.compute("force_sum", "all", "reduce", "sum", "c_force[*]")
+L.compute("force_sumsq", "all", "reduce", "sumsq", "c_force[*]")
+
+L.fix(
+  "tally", "all", "ave/time", 10, 100, 1000,
+  "c_force_sum[*]", "file", "profile.tally.force")
+
+L.fix(
+  "tally", "all", "ave/time", 10, 100, 1000,
+  "c_force_sumsq[*]", "file", "profile.tally.force2")
 
 #-----#
 # Run #
