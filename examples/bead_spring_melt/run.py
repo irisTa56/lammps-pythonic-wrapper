@@ -154,11 +154,11 @@ L.compute("force_sum", "all", "reduce", "sum", "c_force[*]")
 L.compute("force_sumsq", "all", "reduce", "sumsq", "c_force[*]")
 
 L.fix(
-  "tally", "all", "ave/time", 10, 100, 1000,
+  "tally2", "all", "ave/time", 10, 100, 1000,
   "c_force_sum[*]", "file", "profile.tally.force")
 
 L.fix(
-  "tally", "all", "ave/time", 10, 100, 1000,
+  "tally3", "all", "ave/time", 10, 100, 1000,
   "c_force_sumsq[*]", "file", "profile.tally.force2")
 
 #-----#
